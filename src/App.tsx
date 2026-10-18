@@ -26,7 +26,7 @@ export default function App() {
   const [creator, setCreator] = useState(false);
   const [storageError, setStorageError] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
-    try { return localStorage.getItem("daily-drop-theme") === "light" ? "light" : "dark"; } catch { return "dark"; }
+    try { return localStorage.getItem("daily-drop-theme") === "dark" ? "dark" : "light"; } catch { return "light"; }
   });
   useEffect(() => {
     try { localStorage.setItem(KEY, JSON.stringify(data)); setStorageError(false); }
