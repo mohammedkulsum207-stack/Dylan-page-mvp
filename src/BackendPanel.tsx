@@ -34,7 +34,7 @@ export default function BackendPanel() {
   setBusy(true);setMessage('');
   try {
    if(!session || !editor) throw new Error('An assigned editor account is required.');
-   const parsed = new URL(link);if(!['https:','http:'].includes(parsed.protocol)) throw new Error('Use an HTTP or HTTPS source URL.');
+   const parsed = new globalThis.URL(link);if(!['https:','http:'].includes(parsed.protocol)) throw new Error('Use an HTTP or HTTPS source URL.');
    if(!headline.trim() || !summary.trim() || !source.trim()) throw new Error('Fill in the headline, story and source name.');
    await request('/rest/v1/stories','POST',{headline:headline.trim(),summary:summary.trim(),body:[summary.trim()],author_id:session.user.id,sources:[{name:source.trim(),url:parsed.href}],status:'published',published_at:new Date().toISOString()},session.access_token);
    await load();setHeadline('');setSummary('');setMessage('Published to the shared database.');
