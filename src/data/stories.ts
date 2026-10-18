@@ -14,7 +14,7 @@ export const DEMO_STORIES: Story[] = [
       "That demand is prompting a difficult debate: how quickly can grids expand, which energy sources should supply the new load, and who ultimately pays for upgrades? The answer differs by country and by the age of its existing power network.",
       "The key question for readers is not simply whether AI uses more electricity. It is whether investment in generation, transmission and efficiency can keep pace with the technology being deployed."
     ],
-    category: "Tech",
+    category: "AI",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85",
     source: "The Daily Drop Explainer Desk",
     publishedAt: ago(14),
@@ -110,7 +110,7 @@ export const DEMO_STORIES: Story[] = [
       "Adaptive brightness, software updates, sensible location permissions and checking battery usage can help users identify the biggest drains on their own device. Results vary by phone and how it is used.",
       "For buyers, independent testing across common tasks is usually more useful than comparing battery capacity alone."
     ],
-    category: "Tech",
+    category: "Technology",
     image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85",
     source: "The Daily Drop Tech Desk",
     publishedAt: ago(225),
@@ -142,7 +142,7 @@ export const DEMO_STORIES: Story[] = [
       "Be cautious when a message demands immediate action, asks for a password or one-time code, requests an unusual payment, or directs you to a link you were not expecting. Contact the organisation through its official app or a number you already trust.",
       "If you have already shared a code or password, use the official service to secure the account promptly and contact your payment provider if money may be at risk."
     ],
-    category: "Tech",
+    category: "Technology",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=85",
     source: "The Daily Drop Digital Safety Desk",
     publishedAt: ago(340),
@@ -190,7 +190,7 @@ export const DEMO_STORIES: Story[] = [
       "Short study sessions, specific goals, active practice and timely feedback can help turn information into usable skills. Courses that include projects or assessments make it easier to see what has actually been learned.",
       "Before paying for a course, check its syllabus, instructor credentials, refund terms and whether the learning format matches your needs."
     ],
-    category: "Tech",
+    category: "Technology",
     image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
     source: "The Daily Drop Future Desk",
     publishedAt: ago(560),
