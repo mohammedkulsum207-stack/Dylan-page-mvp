@@ -1,75 +1,52 @@
-import { useEffect, useState } from "react";
-import type { Story } from "./types";
-import { DEMO_STORIES } from "./data/stories";
-import { trendingStories } from "./lib/trending";
-import StoryCard from "./components/StoryCard";
-import Creator from "./pages/Creator";
-import StoryPage from "./pages/Story";
-import Login from "./pages/Login";
-
-type Tab = "Latest" | "Breaking" | "Live" | "Trending" | "Debated" | "Saved" | "Videos";
-type Stored = { posts: Story[]; saved: string[]; liked: string[] };
-const KEY = "daily-drop-demo-v1";
-function read(): Stored {
-  try {
-    const value = JSON.parse(localStorage.getItem(KEY) || "{}");
-    return { posts: Array.isArray(value.posts) ? value.posts : [], saved: Array.isArray(value.saved) ? value.saved : [], liked: Array.isArray(value.liked) ? value.liked : [] };
-  } catch { return { posts: [], saved: [], liked: [] }; }
-}
-export default function App() {
-  const [data, setData] = useState<Stored>(read);
-  const [entered, setEntered] = useState(false);
-  const [tab, setTab] = useState<Tab>("Latest");
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [creator, setCreator] = useState(false);
-  const [storageError, setStorageError] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    try { return localStorage.getItem("daily-drop-theme-v2") === "dark" ? "dark" : "light"; } catch { return "light"; }
-  });
-  useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(data)); setStorageError(false); }
-    catch { setStorageError(true); }
-  }, [data]);
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    try { localStorage.setItem("daily-drop-theme-v2", theme); } catch { /* Theme still works for this session. */ }
-  }, [theme]);
-  const stories = [...data.posts, ...DEMO_STORIES].map(s => ({ ...s, liveUrl: undefined, likes: s.likes + (data.liked.includes(s.id) ? 1 : 0) }));
-  const active = stories.find(s => s.id === activeId);
-  const toggle = (field: "saved" | "liked", id: string) => setData(d => ({ ...d, [field]: d[field].includes(id) ? d[field].filter(x => x !== id) : [...d[field], id] }));
-  const actions = (s: Story) => <div className="story-actions"><button className="quiet-button" aria-pressed={data.liked.includes(s.id)} onClick={() => toggle("liked", s.id)}>{data.liked.includes(s.id) ? "♥ Liked" : "♡ Like"}</button><button className="quiet-button" aria-pressed={data.saved.includes(s.id)} onClick={() => toggle("saved", s.id)}>{data.saved.includes(s.id) ? "✓ Saved" : "＋ Save story"}</button></div>;
-  const notice = null;
-  if (!entered) return <Login onEnter={() => setEntered(true)} />;
-  if (creator) return <><div className="app">{notice}<p className="meta">Demo editor only. This is not a secure admin account; posts are saved in this browser.</p></div><Creator onBack={() => setCreator(false)} onPublish={s => { setData(d => ({...d, posts: [{...s, liveUrl: undefined}, ...d.posts]})); setCreator(false); setTab("Latest"); }} /></>;
-  if (active) return <><div className="app compact-top">{notice}{actions(active)}{storageError && <p role="alert">Browser storage is unavailable; changes may not survive a refresh.</p>}</div><StoryPage story={active} onBack={() => setActiveId(null)} /></>;
-  let visible = tab === "Trending" ? trendingStories(stories) : tab === "Debated" ? [...stories].sort((a,b) => b.comments - a.comments) : [...stories].sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
-  visible = visible.filter(s => (tab !== "Breaking" || s.isBreaking) && (tab !== "Live" || s.isLive) && (tab !== "Saved" || data.saved.includes(s.id)) && (category === "All" || s.category === category) && `${s.headline} ${s.summary} ${s.category}`.toLowerCase().includes(query.toLowerCase()));
-  const showLead = tab === "Latest" && !query.trim() && category === "All" && visible.length > 0;
-  const lead = showLead ? visible[0] : undefined;
-  const list = lead ? visible.slice(1) : visible;
-  return <div className="app">
-    <header className="masthead">
-      <div className="masthead-top"><span className="edition">INDEPENDENT NEWS CONCEPT</span><span className="edition">NEWS · CONTEXT · CLARITY</span></div>
-      <div className="header">
-        <button className="wordmark" aria-label="The Daily Drop home" onClick={() => { setTab("Latest"); setCategory("All"); setQuery(""); setActiveId(null); }}><span className="wordmark-main">THE DAILY</span><span className="wordmark-drop">DROP<span className="wordmark-period">.</span></span></button>
-        <div className="header-actions"><button className="icon-button" aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? "☼" : "☾"}</button><button className="outline-button" onClick={() => setCreator(true)}>Creator desk <span aria-hidden="true">↗</span></button></div>
-      </div>
-      <div className="masthead-rule"><span>YOUR WORLD, WELL INFORMED.</span><span>EDITION 001</span></div>
-    </header>
-    {notice}
-    {storageError && <p role="alert" className="storage-warning">Browser storage is unavailable; changes may not survive a refresh.</p>}
-    <section className="briefing-bar"><span className="briefing-dot" /> THE NEWS BRIEFING <span className="briefing-copy">The important stories, without the noise.</span></section>
-    <label className="search-label">Search the newsroom<input className="search-input" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search headlines, topics and categories…" /></label>
-    <nav className="tabs" aria-label="News sections">{(["Latest", "Breaking", "Live", "Trending", "Debated", "Saved", "Videos"] as Tab[]).map(t => <button key={t} className={`tab ${tab === t ? "active" : ""}`} aria-pressed={tab === t} onClick={() => setTab(t)}>{t === "Breaking" && <span className="tab-mark">•</span>}{t}</button>)}</nav>
-    <div className="category-row" aria-label="Categories">{["All", ...new Set(stories.map(s => s.category))].map(c => <button key={c} className={`category-chip ${category === c ? "active" : ""}`} aria-pressed={category === c} onClick={() => setCategory(c)}>{c}</button>)}</div>
-    {tab === "Videos" ? <section className="empty-panel"><span className="section-eyebrow">THE WATCH DESK</span><h2>Video, with context.</h2><p>No licensed news videos have been added yet. This space is reserved for creator-approved clips and explainers—not placeholder footage.</p></section> :
-      <>{lead && <section className="lead-story"><div className="section-heading"><span className="section-eyebrow">THE LEAD STORY</span><span className="meta">EDITOR'S PICK</span></div><button className="lead-card" onClick={() => setActiveId(lead.id)}><img src={lead.image} alt="" /><div className="lead-content"><div className="lead-tags">{lead.isBreaking && <span className="badge badge-breaking">BREAKING</span>}<span className="lead-category">{lead.category}</span></div><h1>{lead.headline.replace(/^Sample:\s*/i, "")}</h1><p>{lead.summary}</p><div className="lead-byline"><span>{lead.source}</span><span>{new Date(lead.publishedAt).toLocaleDateString(undefined, {month:"short",day:"numeric"})}</span><span>Read story ↗</span></div></div></button>{actions(lead)}</section>}
-      {list.length > 0 && <div className="section-heading latest-heading"><span className="section-eyebrow">{tab === "Latest" ? "LATEST REPORTS" : tab.toUpperCase() + " COVERAGE"}</span><span className="meta">{list.length} {list.length === 1 ? "STORY" : "STORIES"}</span></div>}
-      {list.length ? list.map(s => <section key={s.id} className="story-list-item"><StoryCard story={s} onOpen={() => setActiveId(s.id)} />{actions(s)}</section>) : !lead && <p className="empty">No matching stories. Try another search or save a story from Latest.</p>}
-      </>}
-    {tab === "Live" && <p className="meta">Live coverage is a visual demo only. No broadcast is running.</p>}
-    <footer className="site-footer"><div className="footer-wordmark">THE DAILY DROP<span>.</span></div><p>Clear reporting. Useful context. A better-informed world.</p><div className="footer-rule" /><p className="meta">Independent prototype · © The Daily Drop concept</p><p className="meta">Likes, saves and creator posts are stored in this browser only. Accounts, shared analytics, streaming and push notifications require production services.</p></footer>
-  </div>;
+import { useEffect, useState } from 'react';
+import { DEMO_STORIES } from './data/stories';
+import type { Story } from './types';
+import { trendingStories } from './lib/trending';
+type Comment={id:string;text:string};
+type State={posts:Story[];liked:string[];saved:string[];comments:Record<string,Comment[]>;alerts:boolean;large:boolean;followed:string[];videos:Record<string,string>;theme:'dark'|'light'};
+const initial=():State=>({posts:DEMO_STORIES.map(s=>({...s,liveUrl:undefined})),liked:[],saved:[],comments:{},alerts:true,large:false,followed:[],videos:{},theme:'light'});
+const key='daily-drop-product-v1';
+const read=():State=>{try{const x=JSON.parse(localStorage.getItem(key)||'null');if(x&&Array.isArray(x.posts)){if(localStorage.getItem('daily-drop-redesign-v1')!=='yes'){x.theme='light';localStorage.setItem('daily-drop-redesign-v1','yes');}return x;}return initial();}catch{return initial();}};
+const safe=(url:string)=>{try{return ['https:','http:'].includes(new URL(url).protocol);}catch{return false;}};
+const NAV=[['Home','🏠'],['Explore','🔍'],['Watch','▶'],['Saved','🔖'],['Profile','👤']];
+export default function Demo(){
+const [d,setD]=useState<State>(read);const [tab,setTab]=useState('Home');const [active,setActive]=useState<string|null>(null);const [query,setQuery]=useState('');const [category,setCategory]=useState('All');const [sort,setSort]=useState<'Latest'|'Trending'>('Latest');const [alert,setAlert]=useState<string|null>(null);const [note,setNote]=useState('');const [comment,setComment]=useState('');
+const [editing,setEditing]=useState<string|null>(null);const [headline,setHeadline]=useState('');const [body,setBody]=useState('');const [source,setSource]=useState('');const [url,setUrl]=useState('');const [video,setVideo]=useState('');const [breaking,setBreaking]=useState(false);
+useEffect(()=>{try{localStorage.setItem(key,JSON.stringify(d));}catch{setNote('Storage unavailable; changes last until this page closes.');}},[d]);
+useEffect(()=>{document.documentElement.dataset.theme=d.theme;},[d.theme]);
+const toggle=(field:'liked'|'saved'|'followed',id:string)=>setD(v=>({...v,[field]:v[field].includes(id)?v[field].filter(x=>x!==id):[...v[field],id]}));
+const open=(id:string)=>{setActive(id);setComment('');window.history.replaceState(null,'',`#story=${encodeURIComponent(id)}`);};
+useEffect(()=>{const id=new URLSearchParams(window.location.hash.slice(1)).get('story');if(id)setActive(id);},[]);
+const back=()=>{setActive(null);window.history.replaceState(null,'',window.location.pathname+window.location.search);};
+const latest=[...d.posts].sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt));
+const story=d.posts.find(s=>s.id===active);
+const actions=(s:Story)=><div className="actions"><button className="chip" aria-pressed={d.liked.includes(s.id)} onClick={()=>toggle('liked',s.id)}>{d.liked.includes(s.id)?'♥ Liked':'♡ Like'} · {s.likes+(d.liked.includes(s.id)?1:0)}</button><button className="chip" onClick={()=>toggle('saved',s.id)}>{d.saved.includes(s.id)?'Saved ✓':'Save'}</button><button className="chip" onClick={async()=>{try{await navigator.clipboard.writeText(`${location.origin}${location.pathname}#story=${encodeURIComponent(s.id)}`);setNote('Story link copied. Locally created stories remain in this browser.');}catch{setNote('Copy the story address to share it.');}}}>Share</button></div>;
+function edit(s?:Story){setEditing(s?.id||null);setHeadline(s?.headline||'');setBody(s?.body.join('\n\n')||'');setSource(s?.sources[0]?.name||'');setUrl(s?.sources[0]?.url||'');setVideo(s?d.videos[s.id]||'':'');setBreaking(s?.isBreaking||false);back();setTab('Profile');setNote('');}
+function publish(){if(!headline.trim()||!body.trim()||!source.trim()||!safe(url)||(video&&!safe(video))){setNote('Add a headline, story, source name and valid HTTP(S) source/video URL.');return;}
+const id=editing||`demo-${Date.now()}`;const now=new Date().toISOString();const old=d.posts.find(s=>s.id===id);const s:Story={id,headline:headline.trim(),summary:body.slice(0,180),body:body.split('\n\n'),category:'World',image:old?.image||DEMO_STORIES[0].image,source:'Demo editor',publishedAt:old?.publishedAt||now,updatedAt:now,sources:[{name:source,url,publishedAt:now}],isBreaking:breaking,views:old?.views||0,likes:old?.likes||0,comments:0,shares:0};
+setD(v=>({...v,posts:[s,...v.posts.filter(p=>p.id!==id)],videos:{...v.videos,[id]:video}}));if(breaking&&d.alerts)setAlert(id);setTab('Home');setNote(editing?'Story updated in this browser.':'Published to the demo feed.');}
+const categories=['All',...new Set(d.posts.map(s=>s.category))];
+let feed=sort==='Trending'?trendingStories(d.posts.map(s=>({...s,likes:s.likes+(d.liked.includes(s.id)?1:0),comments:s.comments+(d.comments[s.id]?.length||0)}))):latest;
+feed=feed.filter(s=>(category==='All'||s.category===category)&&`${s.headline} ${s.summary}`.toLowerCase().includes(query.toLowerCase()));
+const hero=latest.find(s=>s.isBreaking)||latest[0];const featured=latest.find(s=>s.isLive&&s.id!==hero?.id)||latest.find(s=>s.id!==hero?.id);const briefing=latest.filter(s=>s.id!==hero?.id&&s.id!==featured?.id).slice(0,3);const trending=trendingStories(d.posts.map(s=>({...s,likes:s.likes+(d.liked.includes(s.id)?1:0),comments:s.comments+(d.comments[s.id]?.length||0)}))).slice(0,3);const videos=Object.entries(d.videos).filter(([,u])=>safe(u));
+const Card=({s}: {s:Story})=><article className="card"><button className="card-link" onClick={()=>open(s.id)}><img className="card-image" loading="lazy" src={s.image} alt=""/><div className="card-body">{s.isBreaking&&<span className="badge badge-breaking">BREAKING · DEMO</span>}{s.isLive&&<span className="badge badge-live">DEVELOPING · SIMULATION</span>}<h2>{s.headline}</h2><p>{s.summary}</p><p className="meta">{s.category} · {new Date(s.publishedAt).toLocaleTimeString()} · {s.views.toLocaleString()} sample views</p></div></button><div className="card-body">{actions(s)}</div></article>;
+return <main className="app" style={{fontSize:d.large?19:16}}>
+{story?<article className="story"><button className="back" onClick={back}>← Back</button><img className="story-hero" src={story.image} alt=""/>{story.isBreaking&&<p className="badge badge-breaking">BREAKING · DEMO</p>}<h1>{story.headline}</h1><p className="meta">{story.source} · {new Date(story.publishedAt).toLocaleString()} · {story.views.toLocaleString()} sample views</p>{story.updatedAt&&<p className="meta">Updated {new Date(story.updatedAt).toLocaleString()}</p>}{actions(story)}{d.videos[story.id]&&<video className="player" controls preload="none" src={d.videos[story.id]}><track kind="captions"/>Your browser cannot play this file.</video>}{story.body.map((p,i)=><p className="paragraph" key={i}>{p}</p>)}<section className="panel"><h2>Sources</h2><p className="meta">Sample sources unless supplied through the demo creator.</p>{story.sources.map((s,i)=>safe(s.url)?<a className="row" key={i} href={s.url} target="_blank" rel="noopener noreferrer">{s.name}</a>:<p className="row" key={i}>{s.name}</p>)}</section>{story.corrections?.map((c,i)=><p className="panel correction" key={i}>Correction: {c.note}</p>)}{story.isLive&&<section className="panel"><h2>Developing story · simulation</h2><p className="meta">No broadcast is running. Sample timeline:</p><p className="row">{new Date(story.publishedAt).toLocaleTimeString()} · Initial demo update</p><p className="row">{new Date(story.updatedAt||story.publishedAt).toLocaleTimeString()} · Background information added</p></section>}<section className="panel"><h2>Demo discussion</h2>{(d.comments[story.id]||[]).map(c=><p className="row" key={c.id}>You: {c.text} <button className="linklike" onClick={()=>setD(v=>({...v,comments:{...v.comments,[story.id]:(v.comments[story.id]||[]).filter(x=>x.id!==c.id)}}))}>Delete</button></p>)}<form onSubmit={e=>{e.preventDefault();if(!comment.trim())return;setD(v=>({...v,comments:{...v.comments,[story.id]:[...(v.comments[story.id]||[]),{id:String(Date.now()),text:comment.trim()}]}}));setComment('');}}><label className="field">Add a respectful comment<textarea maxLength={2000} value={comment} onChange={e=>setComment(e.target.value)}/></label><button className="primary">Post demo comment</button></form></section><button className="chip" onClick={()=>edit(story)}>Edit in Creator studio</button><section className="panel"><h2>Related stories</h2>{latest.filter(s=>s.id!==story.id).slice(0,2).map(s=><button className="row" key={s.id} onClick={()=>open(s.id)}>{s.headline}</button>)}</section></article>:
+<>
+<header className="premium-masthead"><div className="masthead-top"><span>INDEPENDENT NEWS CONCEPT</span><span>NEWS · CONTEXT · CLARITY</span></div><div className="premium-header"><button className="premium-wordmark" aria-label="The Daily Drop home" onClick={()=>{back();setTab('Home');setQuery('');setCategory('All');}}><span>THE DAILY</span><strong>DROP<span>.</span></strong></button><div className="premium-header-actions"><span className="edition-label">YOUR WORLD, WELL INFORMED.</span><button className="theme-toggle" onClick={()=>setD(v=>({...v,theme:v.theme==='dark'?'light':'dark'}))}>{d.theme==='dark'?'☼ Light':'☾ Dark'}</button></div></div><div className="masthead-rule"><span>THE IMPORTANT STORIES, WITHOUT THE NOISE.</span><span>EDITION 001</span></div></header>
+{alert&&<div className="panel alert" role="status"><button className="chip" onClick={()=>{open(alert);setAlert(null);}}>Breaking demo alert · Open story</button><button className="chip" onClick={()=>setAlert(null)}>Dismiss</button></div>}{note&&<p className="panel note" role="status">{note} <button className="linklike" onClick={()=>setNote('')}>Dismiss</button></p>}
+{tab==='Home'&&<><div className="briefing-strip"><span className="briefing-live-dot"></span><strong>THE NEWS BRIEFING</strong><span>The important stories, without the noise.</span></div>
+<section className="hero"><div className="section-label"><span>THE LEAD STORY</span><span>EDITORIAL DESK · DEMO</span></div><button className="hero-link" onClick={()=>hero&&open(hero.id)}>{hero&&<><img src={hero.image} alt=""/><div className="hero-body"><div className="hero-tags">{hero.isBreaking&&<span className="badge badge-breaking">BREAKING</span>}<span className="category-label">{hero.category}</span></div><h1>{hero.headline.replace(/^Sample:\s*/i,'')}</h1><p>{hero.summary}</p><div className="hero-meta"><span>{hero.source}</span><span>{Math.max(1,Math.round(hero.body.join(' ').split(/\s+/).length/220))} min read</span><span>Read story ↗</span></div></div></>}</button></section>
+{featured&&<section className="premium-section"><div className="section-label"><span>CREATOR’S DESK</span><span>FEATURED UPDATE</span></div><div className="section-intro"><h2>From the newsroom</h2><p>Approved updates and explainers, with context.</p></div><Card s={featured}/></section>}
+<section className="premium-section"><div className="section-label"><span>THE DAILY BRIEFING</span><span>WHAT MATTERS</span></div><div className="section-intro"><h2>More stories to know</h2><p>A considered selection of the latest updates.</p></div>{briefing.length?briefing.map(s=><button className="row editorial-row" key={s.id} onClick={()=>open(s.id)}><span className="row-category">{s.category}</span><span>{s.headline.replace(/^Sample:\s*/i,'')}</span><span className="row-arrow">↗</span></button>):<p className="empty">No additional stories yet.</p>}</section>
+<section className="premium-section"><div className="section-label"><span>WHAT READERS ARE FOLLOWING</span><span>DEMO RANKING</span></div><div className="section-intro"><h2>Trending now</h2><p>Stories drawing attention in this sample feed.</p></div>{trending.map((s,i)=><button className="row editorial-row" key={s.id} onClick={()=>open(s.id)}><span className="editorial-rank">{String(i+1).padStart(2,'0')}</span><span>{s.headline.replace(/^Sample:\s*/i,'')}</span><span className="row-arrow">↗</span></button>)}</section></>}
+{tab==='Explore'&&<><label className="field">Search news<input type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search headlines and topics"/></label><div className="chips">{categories.map(c=><button className={`chip ${category===c?'active':''}`} key={c} onClick={()=>setCategory(c)}>{c}</button>)}</div><div className="chips">{['Latest','Trending'].map(s=><button className={`chip ${sort===s?'active':''}`} key={s} onClick={()=>setSort(s as 'Latest'|'Trending')}>{s}</button>)}</div>{!feed.length&&<p className="empty">No matching stories yet.</p>}{feed.map(s=><Card key={s.id} s={s}/>)}</>}
+{tab==='Watch'&&<>{videos.length?<div className="watch">{videos.map(([id,u])=>{const s=d.posts.find(p=>p.id===id);return s&&<section className="watch-item" key={id}><video className="player" controls preload="metadata" src={u}><track kind="captions"/>Your browser cannot play this file.</video><button className="watch-title" onClick={()=>open(id)}>{s.headline}</button><p className="meta">Approved demo clip · Opens full story</p></section>;})}</div>:<div className="empty panel"><h2>Dylan’s video feed</h2><p>Dylan’s next approved update will appear here.</p><p className="meta">Add a direct video-file URL in Creator studio. No third-party footage is bundled.</p><button className="primary" onClick={()=>edit()}>Open Creator studio</button></div>}</>}
+{tab==='Saved'&&<>{d.saved.length?d.saved.map(id=>{const s=d.posts.find(p=>p.id===id);return s?<Card key={id} s={s}/>:null;}):<p className="empty panel">No saved stories yet. Tap Save on any story.</p>}</>}
+{tab==='Profile'&&<section className="panel"><h1>Profile</h1><p className="meta">No account is required in this demo.</p><label className="check"><input type="checkbox" checked={d.alerts} onChange={e=>setD(v=>({...v,alerts:e.target.checked}))}/> In-app breaking demo alerts</label><label className="check"><input type="checkbox" checked={d.large} onChange={e=>setD(v=>({...v,large:e.target.checked}))}/> Larger article text</label><h2>Follow topics</h2><div className="chips">{categories.filter(c=>c!=='All').map(c=><button className={`chip ${d.followed.includes(c)?'active':''}`} key={c} onClick={()=>toggle('followed',c)}>{d.followed.includes(c)?'✓ ':''}{c}</button>)}</div><h2>Creator studio</h2><p className="meta">Public sandbox editor, not yet a protected production dashboard.</p><button className="primary" onClick={()=>edit()}>{editing?'Continue editing':'Create or edit a story'}</button>
+{editing!==null&&<form onSubmit={e=>{e.preventDefault();publish();}}><label className="field">Headline<input required value={headline} onChange={e=>setHeadline(e.target.value)}/></label><label className="field">Full story<textarea required value={body} onChange={e=>setBody(e.target.value)}/></label><label className="field">Source name<input required value={source} onChange={e=>setSource(e.target.value)}/></label><label className="field">Source URL<input required type="url" value={url} onChange={e=>setUrl(e.target.value)}/></label><label className="field">Optional approved direct video-file URL<input type="url" value={video} onChange={e=>setVideo(e.target.value)}/></label><label className="check"><input type="checkbox" checked={breaking} onChange={e=>setBreaking(e.target.checked)}/> Breaking story</label><button className="primary">{editing?'Update story':'Publish demo story'}</button></form>}
+<p className="meta">No background push, real audience tracking, payments, live broadcasts or ads in this demo.</p><button className="chip" onClick={()=>{if(confirm('Delete all local demo posts, comments and preferences?')){setD(initial());setAlert(null);setNote('Demo reset.');}}}>Reset demo</button></section>}
+</>}
+<nav className="bottom-nav" aria-label="Main navigation">{NAV.map(([label,icon])=><button key={label} className={tab===label?'active':''} onClick={()=>{back();setTab(label);}}><span aria-hidden>{icon}</span>{label}</button>)}</nav>
+</main>;
 }
