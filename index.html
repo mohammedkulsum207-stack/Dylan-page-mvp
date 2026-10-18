@@ -235,6 +235,23 @@ body{background:var(--bg);font-size:14px;line-height:1.6;-webkit-font-smoothing:
 }
 /* Keep the category dropdown intentionally white with black text in either theme */
 
+
+/* Premium newsletter sign-up */
+.footer-newsletter{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,64px);align-items:center;margin:30px 0;padding:clamp(24px,4.5vw,48px);background:#17191c;color:#fff;border-radius:5px}
+.footer-newsletter-copy{max-width:480px}
+.newsletter-kicker{font-size:9px;font-weight:900;letter-spacing:.17em;color:#e65a60}
+.footer-newsletter h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4vw,45px);line-height:1.04;letter-spacing:-.04em;margin:12px 0}
+.footer-newsletter h2 em{font-weight:400;color:#e8b6b8}
+.footer-newsletter-copy>p{max-width:410px;font-size:12px;line-height:1.8;color:#c2c4c8;margin:0}
+.footer-newsletter-form{min-width:0}
+.footer-newsletter-form label{display:block;font-size:10px;font-weight:800;color:#f2f2f2;margin-bottom:8px}
+.newsletter-input-row{display:flex;gap:8px;min-width:0}
+.newsletter-input-row input{width:100%;min-width:0;min-height:47px;padding:12px 13px;border:1px solid #51545a;border-radius:3px;background:#24272b;color:#fff;font-size:12px}
+.newsletter-input-row input::placeholder{color:#a6a8ad}
+.newsletter-input-row button{flex:none;min-height:47px;padding:0 16px;border:1px solid #c82e37;border-radius:3px;background:#c82e37;color:#fff;font-size:11px;font-weight:850}
+.newsletter-input-row button span{font-size:16px;margin-left:7px}
+.newsletter-privacy{font-size:9px;line-height:1.6;color:#aeb1b6;margin:10px 0 0}
+@media(max-width:620px){.footer-newsletter{grid-template-columns:1fr;gap:22px;margin:24px 0;padding:23px 19px}.footer-newsletter h2{font-size:34px}.newsletter-input-row{flex-direction:column}.newsletter-input-row button{width:100%}}
 </style>
 </head>
 <body>
@@ -245,7 +262,7 @@ body{background:var(--bg);font-size:14px;line-height:1.6;-webkit-font-smoothing:
   <div class="demo-note"><strong>CONCEPT PREVIEW</strong><span>This is a design prototype. Sample stories are for demonstration, not live breaking news.</span></div>
 </header>
 <main class="wrap" id="app" aria-live="polite"></main>
-<footer class="wrap sitefooter"><div class="footrow"><div><div class="footbrand">THE DAILY DROP<span>.</span></div><p>A creator-led news experience built around clarity, context and stories worth your attention. This prototype includes sourced news summaries and editorial explainers.</p></div><div class="footlinks"><a href="#" data-action="home">Home</a><a href="#" data-action="explore">Explore</a><a href="#" data-action="watch">Watch</a><a href="#" data-action="studio">Creator studio</a></div></div><div class="editionbar"><span>BUILT FOR A BETTER BRIEFING.</span><span>EDITORIAL PROTOTYPE</span></div></footer>
+<footer class="wrap sitefooter"><div class="footrow"><div><div class="footbrand">THE DAILY DROP<span>.</span></div><p>A creator-led news experience built around clarity, context and stories worth your attention. This prototype includes sourced news summaries and editorial explainers.</p></div><div class="footlinks"><a href="#" data-action="home">Home</a><a href="#" data-action="explore">Explore</a><a href="#" data-action="watch">Watch</a><a href="#" data-action="studio">Creator studio</a></div></div><section class="footer-newsletter" aria-labelledby="footer-newsletter-title"><div class="footer-newsletter-copy"><span class="newsletter-kicker">THE DAILY DROP NEWSLETTER</span><h2 id="footer-newsletter-title">The important stories.<br><em>In your inbox.</em></h2><p>A thoughtful briefing of the stories shaping the world, with context worth your time. No noise. Just the drop.</p></div><form id="newsletter" class="footer-newsletter-form"><label for="newsletter-email">Your email address</label><div class="newsletter-input-row"><input id="newsletter-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required><button type="submit">Sign me up <span aria-hidden="true">→</span></button></div><p class="newsletter-privacy">By subscribing, you agree to receive The Daily Drop newsletter. Unsubscribe anytime.</p></form></section><div class="editionbar"><span>BUILT FOR A BETTER BRIEFING.</span><span>EDITORIAL PROTOTYPE</span></div></footer>
 <nav class="bottomnav" aria-label="Main navigation"><button data-action="home" class="active"><span>⌂</span>Home</button><button data-action="explore"><span>⌕</span>Explore</button><button data-action="watch"><span>▷</span>Watch</button><button data-action="saved"><span>▣</span>Saved</button><button data-action="studio"><span>✎</span>Studio</button></nav>
 <div id="toast" class="toast" hidden role="status"></div>
 <script>
