@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
 
 type Props = { onEnter: () => void };
 
@@ -8,7 +9,7 @@ export default function Login({ onEnter }: Props) {
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!email.trim() || !password.trim()) {
       setMessage("Enter an email and password to preview the sign-in flow, or explore as a guest.");
