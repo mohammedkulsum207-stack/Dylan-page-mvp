@@ -5,6 +5,7 @@ import { trendingStories } from "./lib/trending";
 import StoryCard from "./components/StoryCard";
 import Creator from "./pages/Creator";
 import StoryPage from "./pages/Story";
+import Login from "./pages/Login";
 
 type Tab = "Latest" | "Breaking" | "Live" | "Trending" | "Saved" | "Videos";
 type Stored = { posts: Story[]; saved: string[]; liked: string[] };
@@ -17,6 +18,7 @@ function read(): Stored {
 }
 export default function App() {
   const [data, setData] = useState<Stored>(read);
+  const [entered, setEntered] = useState(false);
   const [tab, setTab] = useState<Tab>("Latest");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
@@ -38,7 +40,8 @@ export default function App() {
   const active = stories.find(s => s.id === activeId);
   const toggle = (field: "saved" | "liked", id: string) => setData(d => ({ ...d, [field]: d[field].includes(id) ? d[field].filter(x => x !== id) : [...d[field], id] }));
   const actions = (s: Story) => <div className="story-actions"><button className="quiet-button" aria-pressed={data.liked.includes(s.id)} onClick={() => toggle("liked", s.id)}>{data.liked.includes(s.id) ? "♥ Liked" : "♡ Like"}</button><button className="quiet-button" aria-pressed={data.saved.includes(s.id)} onClick={() => toggle("saved", s.id)}>{data.saved.includes(s.id) ? "✓ Saved" : "＋ Save story"}</button></div>;
-  const notice = <p className="prototype-note">Independent Daily Drop concept for a potential Dylan Page partnership. Not affiliated with or endorsed by Dylan Page. Stories, sources, engagement counts and live labels are demonstrations—not real reporting or live broadcasts.</p>;
+  const notice = null;
+  if (!entered) return <Login onEnter={() => setEntered(true)} />;
   if (creator) return <><div className="app">{notice}<p className="meta">Demo editor only. This is not a secure admin account; posts are saved in this browser.</p></div><Creator onBack={() => setCreator(false)} onPublish={s => { setData(d => ({...d, posts: [{...s, liveUrl: undefined}, ...d.posts]})); setCreator(false); setTab("Latest"); }} /></>;
   if (active) return <><div className="app compact-top">{notice}{actions(active)}{storageError && <p role="alert">Browser storage is unavailable; changes may not survive a refresh.</p>}</div><StoryPage story={active} onBack={() => setActiveId(null)} /></>;
   let visible = tab === "Trending" ? trendingStories(stories) : [...stories].sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
@@ -62,7 +65,7 @@ export default function App() {
     <nav className="tabs" aria-label="News sections">{(["Latest", "Breaking", "Live", "Trending", "Saved", "Videos"] as Tab[]).map(t => <button key={t} className={`tab ${tab === t ? "active" : ""}`} aria-pressed={tab === t} onClick={() => setTab(t)}>{t === "Breaking" && <span className="tab-mark">•</span>}{t}</button>)}</nav>
     <div className="category-row" aria-label="Categories">{["All", ...new Set(stories.map(s => s.category))].map(c => <button key={c} className={`category-chip ${category === c ? "active" : ""}`} aria-pressed={category === c} onClick={() => setCategory(c)}>{c}</button>)}</div>
     {tab === "Videos" ? <section className="empty-panel"><span className="section-eyebrow">THE WATCH DESK</span><h2>Video, with context.</h2><p>No licensed news videos have been added yet. This space is reserved for creator-approved clips and explainers—not placeholder footage.</p></section> :
-      <>{lead && <section className="lead-story"><div className="section-heading"><span className="section-eyebrow">THE LEAD STORY</span><span className="meta">EDITOR'S PICK · DEMO</span></div><button className="lead-card" onClick={() => setActiveId(lead.id)}><img src={lead.image} alt="" /><div className="lead-content"><div className="lead-tags">{lead.isBreaking && <span className="badge badge-breaking">BREAKING</span>}<span className="lead-category">{lead.category}</span></div><h1>{lead.headline.replace(/^Sample:\s*/i, "")}</h1><p>{lead.summary}</p><div className="lead-byline"><span>{lead.source}</span><span>{new Date(lead.publishedAt).toLocaleDateString(undefined, {month:"short",day:"numeric"})}</span><span>Read story ↗</span></div></div></button>{actions(lead)}</section>}
+      <>{lead && <section className="lead-story"><div className="section-heading"><span className="section-eyebrow">THE LEAD STORY</span><span className="meta">EDITOR'S PICK</span></div><button className="lead-card" onClick={() => setActiveId(lead.id)}><img src={lead.image} alt="" /><div className="lead-content"><div className="lead-tags">{lead.isBreaking && <span className="badge badge-breaking">BREAKING</span>}<span className="lead-category">{lead.category}</span></div><h1>{lead.headline.replace(/^Sample:\s*/i, "")}</h1><p>{lead.summary}</p><div className="lead-byline"><span>{lead.source}</span><span>{new Date(lead.publishedAt).toLocaleDateString(undefined, {month:"short",day:"numeric"})}</span><span>Read story ↗</span></div></div></button>{actions(lead)}</section>}
       {list.length > 0 && <div className="section-heading latest-heading"><span className="section-eyebrow">{tab === "Latest" ? "LATEST REPORTS" : tab.toUpperCase() + " COVERAGE"}</span><span className="meta">{list.length} {list.length === 1 ? "STORY" : "STORIES"}</span></div>}
       {list.length ? list.map(s => <section key={s.id} className="story-list-item"><StoryCard story={s} onOpen={() => setActiveId(s.id)} />{actions(s)}</section>) : !lead && <p className="empty">No matching stories. Try another search or save a story from Latest.</p>}
       </>}
