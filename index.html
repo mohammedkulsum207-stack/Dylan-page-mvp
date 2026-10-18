@@ -12,6 +12,74 @@
 @media(max-width:850px){.contentgrid{grid-template-columns:1fr;gap:12px}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:20px}.heroimg{min-height:300px}.hero{grid-template-columns:1fr 1fr}.storycard{grid-template-columns:170px minmax(0,1fr)}.storyimage{height:132px}}
 @media(max-width:620px){.wrap{width:calc(100% - 28px)}.topline{font-size:8px}.topline span:last-child{display:none}.brandrow{padding:17px 0}.brand small{font-size:15px}.brand strong{font-size:35px}.motto{display:none}.editionbar{font-size:8px;letter-spacing:.07em}.demo-note{align-items:flex-start;font-size:10px}.ticker{margin:14px 0 20px;gap:7px;font-size:9px}.ticker span:last-child{font-size:10px}.hero{grid-template-columns:1fr}.heroimg{aspect-ratio:16/9;min-height:0;max-height:none}.herotext{padding:20px}.herotext h1{font-size:36px}.herotext p{font-size:13px}.contentgrid{margin-top:20px}.storycard{grid-template-columns:108px minmax(0,1fr);padding:13px 0}.storyimage{height:112px}.storycopy{padding-left:11px}.storycopy h3{font-size:16px;margin:5px 0}.storycopy p{font-size:10px;line-height:1.5;margin-bottom:8px}.meta{font-size:9px}.quiet{padding:5px 7px;font-size:9px}.sidebar{grid-template-columns:1fr}.sidebox{margin-bottom:16px}.sidebar .sidebox:nth-child(2){display:none}.newsletter{margin-top:10px}.homepage-all-stories .storycard{grid-template-columns:108px minmax(0,1fr)}.video-grid{grid-template-columns:1fr 1fr}.video-card h3{font-size:15px}.bottomnav{position:fixed;z-index:50;bottom:0;left:0;right:0;display:flex;justify-content:space-around;gap:2px;padding:7px 4px max(7px,env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px);border-top:1px solid var(--line)}.bottomnav button{display:flex;flex:1;flex-direction:column;gap:3px;align-items:center;border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800;padding:5px 2px}.bottomnav button span{font-size:17px}.bottomnav button.active{color:var(--red)}.sitefooter{padding-bottom:95px}.footrow{display:block}.footlinks{margin-top:16px}.article{margin:16px auto}.article h1{font-size:38px}.article .dek{font-size:15px}.articlebody{font-size:18px}.searchbar{margin:13px 0}.pagehead{padding-top:20px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+/* Editorial visual refresh: richer cards, stronger hierarchy, modern category tiles */
+.home-categories{margin:24px 0 28px;padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,var(--paper),var(--soft));box-shadow:var(--shadow)}
+.home-categories-head{margin-bottom:15px}
+.home-categories-head strong{font-size:11px;letter-spacing:.15em}
+.home-categories-head span{font-size:11px}
+.home-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.home-category{position:relative;isolation:isolate;overflow:hidden;min-height:86px;padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:var(--paper);font-size:13px;font-weight:850;box-shadow:0 5px 15px #17171708;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.home-category:before{content:"";position:absolute;z-index:-1;inset:0 auto 0 0;width:4px;background:var(--cat-color,var(--red));transition:width .2s ease}
+.home-category:after{content:"";position:absolute;z-index:-1;width:86px;height:86px;right:-26px;bottom:-39px;border-radius:50%;background:var(--cat-color,var(--red));opacity:.09}
+.home-category span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--cat-color,var(--red));font-size:17px}
+.home-category:hover{transform:translateY(-3px);border-color:var(--cat-color,var(--red));box-shadow:0 12px 25px #17171712;background:var(--paper)}
+.home-category:hover:before{width:7px}
+.home-category:nth-child(1){--cat-color:#c74343}.home-category:nth-child(2){--cat-color:#6c63c7}.home-category:nth-child(3){--cat-color:#16856b}.home-category:nth-child(4){--cat-color:#d28a24}.home-category:nth-child(5){--cat-color:#287bc1}.home-category:nth-child(6){--cat-color:#0e8d9c}.home-category:nth-child(7){--cat-color:#805ad5}.home-category:nth-child(8){--cat-color:#427b54}.home-category:nth-child(9){--cat-color:#bd5c8a}
+.hero{position:relative;grid-template-columns:1.08fr .92fr;border:0;border-radius:22px;box-shadow:0 18px 45px #11111112;background:var(--paper);margin-bottom:34px}
+.heroimg{min-height:390px;max-height:570px;object-fit:cover;transition:transform .6s ease}
+.hero:hover .heroimg{transform:scale(1.025)}
+.herotext{padding:clamp(24px,4vw,54px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:99px;background:var(--redsoft);letter-spacing:.11em}
+.herotext h1{font-size:clamp(32px,4.5vw,56px);line-height:1.01;letter-spacing:-.052em}
+.herotext p{font-size:15px}
+.byline button{padding:10px 14px;border:0;border-radius:99px;background:var(--red);color:#fff;font-weight:850;transition:transform .2s ease,opacity .2s ease}
+.byline button:hover{transform:translateY(-2px);opacity:.92}
+.homepage-all-stories{margin-top:34px}
+.homepage-all-stories .sectionline{display:flex;align-items:center;gap:12px;border-bottom:0;margin-bottom:8px}
+.homepage-all-stories .sectionline:first-child:before{content:"";display:block;width:26px;height:3px;border-radius:9px;background:var(--red)}
+.homepage-all-stories .sectionintro{margin:0 0 22px;padding:0 0 16px;border-bottom:1px solid var(--line)}
+.homepage-all-stories .sectionintro h2{font-size:clamp(30px,4vw,42px);letter-spacing:-.045em}
+.homepage-all-stories .sectionintro p{font-size:13px;max-width:600px}
+.homepage-all-stories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.homepage-all-stories>.sectionline,.homepage-all-stories>.sectionintro{grid-column:1/-1}
+.homepage-all-stories .storycard{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:17px;background:var(--paper);padding:0;box-shadow:0 5px 20px #11111108;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.homepage-all-stories .storycard:first-of-type{border-top:1px solid var(--line)}
+.homepage-all-stories .storycard:hover{transform:translateY(-4px);border-color:#c8b7b7;box-shadow:0 16px 32px #11111112}
+.homepage-all-stories .storyimage{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;transition:transform .4s ease}
+.homepage-all-stories .storycard:hover .storyimage{transform:scale(1.025)}
+.homepage-all-stories .storycopy{padding:17px 18px 18px;flex:1}
+.homepage-all-stories .category{display:inline-flex;padding:6px 9px;border-radius:99px;background:var(--redsoft);font-size:9px;letter-spacing:.09em}
+.homepage-all-stories .storycopy h3{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(17px,1.6vw,21px);font-weight:850;line-height:1.22;letter-spacing:-.035em;margin:11px 0 9px}
+.homepage-all-stories .storycopy p{font-size:12px;line-height:1.7;margin-bottom:14px}
+.homepage-all-stories .meta{padding-top:10px;border-top:1px solid var(--line);font-size:10px}
+.homepage-all-stories .cardactions{gap:7px;margin-top:15px}
+.homepage-all-stories .quiet{border-radius:99px;padding:7px 10px;background:var(--bg);transition:background .2s ease,border-color .2s ease}
+.homepage-all-stories .quiet:hover{border-color:var(--red);background:var(--redsoft)}
+.storycard,.hero,.home-category{ -webkit-tap-highlight-color:transparent}
+@media(max-width:760px){
+ .home-categories{padding:14px;border-radius:15px;margin:18px 0 22px}
+ .home-category-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .home-category{min-height:76px;padding:11px 10px;font-size:11px;border-radius:12px}
+ .home-category span{width:24px;height:24px;font-size:14px}
+ .hero{grid-template-columns:1fr;border-radius:17px}
+ .heroimg{min-height:0;height:auto;aspect-ratio:16/9;max-height:none}
+ .herotext{padding:22px}
+ .herotext h1{font-size:clamp(30px,8vw,43px)}
+ .homepage-all-stories{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .homepage-all-stories .storycopy{padding:12px}
+ .homepage-all-stories .storycopy h3{font-size:15px}
+ .homepage-all-stories .storycopy p{font-size:11px}
+ .homepage-all-stories .cardactions{gap:5px}
+ .homepage-all-stories .quiet{font-size:9px;padding:6px 8px}
+}
+@media(max-width:420px){
+ .home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .homepage-all-stories{grid-template-columns:1fr;gap:12px}
+ .homepage-all-stories .storyimage{aspect-ratio:16/8}
+ .homepage-all-stories .storycopy{padding:15px}
+ .homepage-all-stories .storycopy h3{font-size:18px}
+}
 </style>
 </head>
 <body>
@@ -68,7 +136,7 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 function navigate(page){state.page=page;state.active=null;render();window.scrollTo({top:0,behavior:'smooth'});document.querySelectorAll('.bottomnav button').forEach(b=>b.classList.toggle('active',b.dataset.action===page))}
 function storyCard(s){const saved=user.saved.includes(s.id),liked=user.liked.includes(s.id);return `<article class="storycard"><img class="storyimage" src="${esc(s.image)}" alt="" loading="lazy" data-story="${esc(s.id)}"><div class="storycopy"><span class="category">${esc(s.category)} · ${storyDate(s)}</span><h3 data-story="${esc(s.id)}">${esc(s.headline)}</h3><p>${esc(s.summary)}</p><div class="meta">${esc(s.source)}</div><div class="cardactions"><button class="quiet" data-save="${esc(s.id)}" aria-pressed="${saved}">${saved?'✓ Saved':'＋ Save'}</button><button class="quiet" data-share="${esc(s.id)}">↗ Share</button><button class="quiet" data-story="${esc(s.id)}">Read story →</button></div></div></article>`}
 function hero(s){return `<section class="hero"><img class="heroimg" src="${esc(s.image)}" alt="" fetchpriority="high"><div class="herotext"><span class="eyebrow">The lead story · ${esc(s.category)}</span><h1>${esc(s.headline)}</h1><p>${esc(s.summary)}</p><div class="byline"><span>${esc(s.source)}</span><span>${storyDate(s)}</span><button data-story="${esc(s.id)}">Read full story ↗</button></div></div></section>`}
-function renderHome(){const all=allStories();const lead=all[0];const list=all.filter(s=>s.id!==lead?.id);const homeCats=['Crime','Politics','Business','Crypto','Sports','Technology','AI','World','Culture'];return `<div class="ticker"><i class="live-dot"></i> THE DAILY BRIEFING <span>Stories worth your attention, with context.</span></div><section class='home-categories'><div class='home-categories-head'><strong>EXPLORE BY CATEGORY</strong><span>Choose your briefing</span></div><div class='home-category-grid'>${homeCats.map(cat=>`<button class='home-category' data-home-category='${cat}'>${cat}<span>↗</span></button>`).join('')}</div></section>${hero(lead)}<section class="storylist homepage-all-stories"><div class="sectionline"><span>THE LATEST</span><span class="right">${all.length} STORIES</span></div><div class="sectionintro"><h2>More stories to know</h2><p>Browse the full front-page briefing across news, business, world, technology, sport and culture.</p></div>${list.slice(0,40).map(storyCard).join('')}</section>`}
+function renderHome(){const all=allStories();const lead=all[0];const list=all.filter(s=>s.id!==lead?.id);const homeCats=['Crime','Politics','Business','Crypto','Sports','Technology','AI','World','Culture'];return `<div class="ticker"><i class="live-dot"></i> THE DAILY BRIEFING <span>Stories worth your attention, with context.</span></div><section class='home-categories'><div class='home-categories-head'><strong>EXPLORE BY CATEGORY</strong><span>Choose your briefing</span></div><div class='home-category-grid'>${homeCats.map(cat=>`<button class='home-category' data-home-category='${cat}'><b>${cat}</b><span>↗</span></button>`).join('')}</div></section>${hero(lead)}<section class="storylist homepage-all-stories"><div class="sectionline"><span>THE LATEST</span><span class="right">${all.length} STORIES</span></div><div class="sectionintro"><h2>More stories to know</h2><p>Browse the full front-page briefing across news, business, world, technology, sport and culture.</p></div>${list.slice(0,40).map(storyCard).join('')}</section>`}
 function renderExplore(){let list=allStories().filter(s=>(state.category==='All'||s.category===state.category)&&(`${s.headline} ${s.summary} ${s.category}`).toLowerCase().includes(state.query.toLowerCase()));if(state.sort==='Trending')list.sort((a,b)=>(b.views||0)-(a.views||0));else list.sort((a,b)=>(a.minutes||1)-(b.minutes||1));const cats=['All','Crime','Politics','Business','Crypto','Sports','Technology','AI','World','Culture'];return `<div class="pagehead"><span class="eyebrow">Explore the briefing</span><h1>Find the story behind the story.</h1><p>Search by topic, browse a category, or follow the stories people are reading in this sample edition.</p></div><div class="searchbar"><input id="searchInput" type="search" value="${esc(state.query)}" placeholder="Search headlines, topics and context…" aria-label="Search stories"><button class="btn" data-action="search">Search</button></div><div class="filters">${cats.map(c=>`<button class="filter ${state.category===c?'active':''}" data-category="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="filters"><button class="filter ${state.sort==='Latest'?'active':''}" data-sort="Latest">Latest</button><button class="filter ${state.sort==='Trending'?'active':''}" data-sort="Trending">Most read</button></div><div class="sectionline"><span>${list.length} STORIES</span><span class="right">LATEST &amp; CONTEXT</span></div>${list.length?list.map(storyCard).join(''):'<div class="savedempty">No stories match that search. Try another word or category.</div>'}`}
 function renderSaved(){const list=user.saved.map(getStory).filter(Boolean);return `<div class="pagehead"><span class="eyebrow">Your reading list</span><h1>Saved for later.</h1><p>Your saved stories stay in this browser on this device. A real account and cross-device sync would be added for launch.</p></div>${list.length?list.map(storyCard).join(''):'<div class="savedempty">No saved stories yet. Open Explore and tap “Save” on a story you want to come back to.</div>'}`}
 function renderWatch(){return `<div class="pagehead"><span class="eyebrow">Watch · concept preview</span><h1>The story, in a few minutes.</h1><p>A home for short explainers, creator updates and verified clips. These are preview cards, not playable broadcasts.</p></div><div class="video-grid">${[{title:'How to check a viral clip',cat:'Verification',icon:'◉',desc:'A simple checklist before you share.'},{title:'The big story, explained',cat:'Daily briefing',icon:'▶',desc:'The context behind the headline.'},{title:'What matters in tech',cat:'Technology',icon:'▣',desc:'The people and ideas changing the conversation.'}].map(v=>`<article class="video-card"><div class="video-poster">${v.icon}</div><div><span class="category">${v.cat} · CONCEPT</span><h3>${v.title}</h3><p>${v.desc}</p><button class="quiet" data-watch="${esc(v.title)}">Preview segment ↗</button></div></article>`).join('')}</div><div class="demo-note"><strong>COMING LATER</strong><span>Real video hosting, creator uploads, captions and moderation require production infrastructure.</span></div>`}
