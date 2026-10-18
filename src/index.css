@@ -237,3 +237,93 @@ html{background:var(--bg)}body{background:var(--bg);color:var(--text);line-heigh
 @media(max-width:380px){.app{padding-left:12px;padding-right:12px}.card{grid-template-columns:100px minmax(0,1fr)}.card-image{width:100px;min-height:122px}.card-body{padding:9px}.card h2{font-size:15px}.login-footer span:last-child{display:none}}
 @media(min-width:721px){.app>.lead-story{max-width:100%}.app>.lead-story .lead-card{min-height:340px}.app>.story-list-item .card{grid-template-columns:220px minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* The Daily Drop — clean modern newsroom, deep red identity */
+:root{
+ color-scheme:light;
+ --bg:#f5f4f0;--surface:#fffefa;--surface-2:#efede7;--line:#dfdcd4;
+ --text:#202124;--muted:#6b6d72;--accent:#b4232c;--accent-soft:#f9e8e8;--chip:#efede7;
+}
+:root[data-theme='dark']{
+ color-scheme:dark;
+ --bg:#141414;--surface:#1d1d1f;--surface-2:#262628;--line:#38383b;
+ --text:#f6f4f0;--muted:#b2b0ad;--accent:#e34b50;--accent-soft:#3b2022;--chip:#262628;
+}
+body{background:var(--bg);color:var(--text)}
+.app{max-width:1120px;margin:0 auto;padding:26px 30px 100px}
+.premium-masthead{margin-bottom:22px}
+.masthead-top{padding:0 0 12px;border-bottom:1px solid var(--line);font-size:9px;letter-spacing:.15em}
+.premium-header{padding:21px 0 18px}
+.premium-wordmark{align-items:baseline;gap:7px}
+.premium-wordmark>span{font-size:clamp(25px,3vw,33px);font-weight:900;letter-spacing:-.07em}
+.premium-wordmark strong{font-size:clamp(34px,4vw,45px);letter-spacing:-.075em}
+.premium-wordmark strong span,.footer-wordmark span{color:var(--accent)}
+.theme-toggle,.chip,.category-chip,.tab,.quiet-button,.outline-button{transition:background .18s ease,color .18s ease,border-color .18s ease}
+.theme-toggle,.outline-button{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:8px}
+.theme-toggle:hover,.outline-button:hover{border-color:var(--accent)}
+.masthead-rule{border-top:2px solid var(--text);border-bottom:1px solid var(--line);padding:9px 0}
+.briefing-strip{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--surface);padding:13px 16px;margin:20px 0 24px;letter-spacing:.04em}
+.briefing-strip strong{color:var(--accent);font-size:10px}
+.briefing-strip>span:last-child{color:var(--muted);font-size:12px}
+.briefing-live-dot{background:var(--accent)}
+.hero .section-label{margin:20px 0 12px;padding-top:0;border:0;font-size:10px;color:var(--accent)}
+.hero-link{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:0 8px 24px rgba(27,25,20,.045)}
+.hero-link>img{width:100%;height:100%;min-height:350px;max-height:470px;object-fit:cover;filter:none}
+.hero-body{padding:clamp(24px,4vw,48px);border:0}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(31px,4vw,49px);line-height:1.06;letter-spacing:-.04em;margin:17px 0 14px}
+.hero-body>p{font-size:15px;line-height:1.75;color:var(--muted);max-width:45ch}
+.category-label{color:var(--accent)}
+.hero-meta{padding-top:16px;font-size:11px}
+.hero-meta span:last-child{color:var(--accent)}
+.badge-breaking,.badge-live{background:var(--accent);color:#fff;border-radius:4px}
+.premium-section{margin:34px 0}
+.section-label{border-top:1px solid var(--line);padding-top:14px;margin:28px 0 14px;color:var(--muted)}
+.section-intro h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(25px,3vw,32px);letter-spacing:-.035em}
+.section-intro p{color:var(--muted);font-size:13px}
+.premium-section .card{grid-template-columns:230px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;box-shadow:0 5px 18px rgba(27,25,20,.035)}
+.premium-section .card-image{width:230px;min-height:170px;max-height:210px}
+.premium-section .card-body{padding:18px 20px}
+.premium-section .card h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(19px,2.1vw,25px);line-height:1.18}
+.premium-section .card p{font-size:13px;line-height:1.6;color:var(--muted)}
+.editorial-row{grid-template-columns:100px minmax(0,1fr) 22px;padding:18px 8px;border-top:1px solid var(--line);font-size:15px;transition:background .16s ease,padding .16s ease}
+.editorial-row:hover{background:var(--surface);padding-left:14px}
+.row-category,.row-arrow,.editorial-rank{color:var(--accent)}
+.row-category{font-size:10px}
+.site-footer{border-top:2px solid var(--text);margin-top:54px}
+.bottom-nav{left:50%;transform:translateX(-50%);width:min(100%,1120px);max-width:1120px;background:color-mix(in srgb,var(--bg) 94%,transparent);border-color:var(--line);backdrop-filter:blur(16px);padding:10px 16px max(10px,env(safe-area-inset-bottom))}
+.bottom-nav button{border-radius:10px}
+.bottom-nav button.active{color:var(--accent);background:var(--accent-soft)}
+.panel,.empty-panel,.sources,.watch-item{background:var(--surface);border-color:var(--line)}
+.primary{background:var(--accent);color:#fff;border-radius:9px}
+.chip.active,.category-chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab.active{background:var(--accent);color:#fff}
+@media(max-width:700px){
+ .app{padding:14px 15px 104px}
+ .masthead-top{font-size:8px}
+ .premium-header{padding:15px 0}
+ .premium-wordmark{display:block}
+ .premium-wordmark>span{display:block;font-size:19px}
+ .premium-wordmark strong{display:block;font-size:30px;margin-top:2px}
+ .premium-header-actions{gap:6px}
+ .edition-label{display:none}
+ .masthead-rule{font-size:8px;letter-spacing:.08em}
+ .briefing-strip{gap:7px;padding:11px 10px}
+ .briefing-strip strong{font-size:9px}
+ .briefing-strip>span:last-child{font-size:10px}
+ .hero-link{grid-template-columns:1fr}
+ .hero-link>img{min-height:0;max-height:none;aspect-ratio:16/9}
+ .hero-body{padding:20px 18px}
+ .hero h1{font-size:clamp(29px,8vw,38px)}
+ .hero-body>p{font-size:13px}
+ .premium-section{margin:25px 0}
+ .premium-section .card{grid-template-columns:112px minmax(0,1fr)}
+ .premium-section .card-image{width:112px;min-height:125px;max-height:155px}
+ .premium-section .card-body{padding:11px}
+ .premium-section .card h2{font-size:17px}
+ .premium-section .card p{font-size:11px}
+ .editorial-row{grid-template-columns:65px minmax(0,1fr) 15px;gap:8px;padding:15px 3px;font-size:13px}
+ .bottom-nav{width:100%;padding-left:5px;padding-right:5px}
+ .bottom-nav button{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.theme-toggle,.chip,.category-chip,.tab,.quiet-button,.outline-button,.editorial-row{transition:none}}
