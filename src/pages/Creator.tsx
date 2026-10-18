@@ -22,11 +22,11 @@ export default function Creator({
       id: `post-${Date.now()}`,
       headline,
       summary,
-      body: [summary, "This post was published from the News Daddy creator dashboard demo."],
+      body: [summary, "This post was published from the Daily Drop creator dashboard demo."],
       category: "World",
       image:
         "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1200&q=80",
-      source: "News Daddy Creator",
+      source: "The Daily Drop Creator",
       publishedAt: new Date().toISOString(),
       sources: sourceName && sourceUrl
         ? [{ name: sourceName, url: sourceUrl, publishedAt: new Date().toISOString() }]
