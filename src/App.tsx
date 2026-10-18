@@ -26,7 +26,7 @@ export default function App() {
   const [creator, setCreator] = useState(false);
   const [storageError, setStorageError] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
-    try { return localStorage.getItem("daily-drop-theme") === "dark" ? "dark" : "light"; } catch { return "light"; }
+    try { return localStorage.getItem("daily-drop-theme-v2") === "dark" ? "dark" : "light"; } catch { return "light"; }
   });
   useEffect(() => {
     try { localStorage.setItem(KEY, JSON.stringify(data)); setStorageError(false); }
@@ -34,7 +34,7 @@ export default function App() {
   }, [data]);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    try { localStorage.setItem("daily-drop-theme", theme); } catch { /* Theme still works for this session. */ }
+    try { localStorage.setItem("daily-drop-theme-v2", theme); } catch { /* Theme still works for this session. */ }
   }, [theme]);
   const stories = [...data.posts, ...DEMO_STORIES].map(s => ({ ...s, liveUrl: undefined, likes: s.likes + (data.liked.includes(s.id) ? 1 : 0) }));
   const active = stories.find(s => s.id === activeId);
