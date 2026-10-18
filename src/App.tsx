@@ -7,7 +7,7 @@ import Creator from "./pages/Creator";
 import StoryPage from "./pages/Story";
 import Login from "./pages/Login";
 
-type Tab = "Latest" | "Breaking" | "Live" | "Trending" | "Saved" | "Videos";
+type Tab = "Latest" | "Breaking" | "Live" | "Trending" | "Debated" | "Saved" | "Videos";
 type Stored = { posts: Story[]; saved: string[]; liked: string[] };
 const KEY = "daily-drop-demo-v1";
 function read(): Stored {
@@ -44,7 +44,7 @@ export default function App() {
   if (!entered) return <Login onEnter={() => setEntered(true)} />;
   if (creator) return <><div className="app">{notice}<p className="meta">Demo editor only. This is not a secure admin account; posts are saved in this browser.</p></div><Creator onBack={() => setCreator(false)} onPublish={s => { setData(d => ({...d, posts: [{...s, liveUrl: undefined}, ...d.posts]})); setCreator(false); setTab("Latest"); }} /></>;
   if (active) return <><div className="app compact-top">{notice}{actions(active)}{storageError && <p role="alert">Browser storage is unavailable; changes may not survive a refresh.</p>}</div><StoryPage story={active} onBack={() => setActiveId(null)} /></>;
-  let visible = tab === "Trending" ? trendingStories(stories) : [...stories].sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  let visible = tab === "Trending" ? trendingStories(stories) : tab === "Debated" ? [...stories].sort((a,b) => b.comments - a.comments) : [...stories].sort((a,b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   visible = visible.filter(s => (tab !== "Breaking" || s.isBreaking) && (tab !== "Live" || s.isLive) && (tab !== "Saved" || data.saved.includes(s.id)) && (category === "All" || s.category === category) && `${s.headline} ${s.summary} ${s.category}`.toLowerCase().includes(query.toLowerCase()));
   const showLead = tab === "Latest" && !query.trim() && category === "All" && visible.length > 0;
   const lead = showLead ? visible[0] : undefined;
@@ -62,7 +62,7 @@ export default function App() {
     {storageError && <p role="alert" className="storage-warning">Browser storage is unavailable; changes may not survive a refresh.</p>}
     <section className="briefing-bar"><span className="briefing-dot" /> THE NEWS BRIEFING <span className="briefing-copy">The important stories, without the noise.</span></section>
     <label className="search-label">Search the newsroom<input className="search-input" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search headlines, topics and categories…" /></label>
-    <nav className="tabs" aria-label="News sections">{(["Latest", "Breaking", "Live", "Trending", "Saved", "Videos"] as Tab[]).map(t => <button key={t} className={`tab ${tab === t ? "active" : ""}`} aria-pressed={tab === t} onClick={() => setTab(t)}>{t === "Breaking" && <span className="tab-mark">•</span>}{t}</button>)}</nav>
+    <nav className="tabs" aria-label="News sections">{(["Latest", "Breaking", "Live", "Trending", "Debated", "Saved", "Videos"] as Tab[]).map(t => <button key={t} className={`tab ${tab === t ? "active" : ""}`} aria-pressed={tab === t} onClick={() => setTab(t)}>{t === "Breaking" && <span className="tab-mark">•</span>}{t}</button>)}</nav>
     <div className="category-row" aria-label="Categories">{["All", ...new Set(stories.map(s => s.category))].map(c => <button key={c} className={`category-chip ${category === c ? "active" : ""}`} aria-pressed={category === c} onClick={() => setCategory(c)}>{c}</button>)}</div>
     {tab === "Videos" ? <section className="empty-panel"><span className="section-eyebrow">THE WATCH DESK</span><h2>Video, with context.</h2><p>No licensed news videos have been added yet. This space is reserved for creator-approved clips and explainers—not placeholder footage.</p></section> :
       <>{lead && <section className="lead-story"><div className="section-heading"><span className="section-eyebrow">THE LEAD STORY</span><span className="meta">EDITOR'S PICK</span></div><button className="lead-card" onClick={() => setActiveId(lead.id)}><img src={lead.image} alt="" /><div className="lead-content"><div className="lead-tags">{lead.isBreaking && <span className="badge badge-breaking">BREAKING</span>}<span className="lead-category">{lead.category}</span></div><h1>{lead.headline.replace(/^Sample:\s*/i, "")}</h1><p>{lead.summary}</p><div className="lead-byline"><span>{lead.source}</span><span>{new Date(lead.publishedAt).toLocaleDateString(undefined, {month:"short",day:"numeric"})}</span><span>Read story ↗</span></div></div></button>{actions(lead)}</section>}
