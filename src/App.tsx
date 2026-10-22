@@ -4,9 +4,9 @@ import type { Story } from './types';
 import { trendingStories } from './lib/trending';
 type Comment={id:string;text:string};
 type State={posts:Story[];liked:string[];saved:string[];comments:Record<string,Comment[]>;alerts:boolean;large:boolean;followed:string[];videos:Record<string,string>;theme:'dark'|'light'};
-const initial=():State=>({posts:DEMO_STORIES.map(s=>({...s,liveUrl:undefined})),liked:[],saved:[],comments:{},alerts:true,large:false,followed:[],videos:{},theme:'dark'});
+const initial=():State=>({posts:DEMO_STORIES.map(s=>({...s,liveUrl:undefined})),liked:[],saved:[],comments:{},alerts:true,large:false,followed:[],videos:{},theme:'light'});
 const key='daily-drop-product-v1';
-const read=():State=>{try{const x=JSON.parse(localStorage.getItem(key)||'null');if(x&&Array.isArray(x.posts)){x.posts=x.posts.map((s:Story)=>({...s,category:s.id==='world-energy-ai'?'AI':s.category==='Tech'?'Technology':s.category}));x.theme='dark';return x;}return initial();}catch{return initial();}};
+const read=():State=>{try{const x=JSON.parse(localStorage.getItem(key)||'null');if(x&&Array.isArray(x.posts)){x.posts=x.posts.map((s:Story)=>({...s,category:s.id==='world-energy-ai'?'AI':s.category==='Tech'?'Technology':s.category}));if(localStorage.getItem('daily-drop-redesign-v1')!=='yes'){x.theme='light';localStorage.setItem('daily-drop-redesign-v1','yes');}return x;}return initial();}catch{return initial();}};
 const safe=(url:string)=>{try{return ['https:','http:'].includes(new URL(url).protocol);}catch{return false;}};
 const NAV=[['Home','🏠'],['Explore','🔍'],['Watch','▶'],['Saved','🔖'],['Profile','👤']];
 export default function Demo(){
