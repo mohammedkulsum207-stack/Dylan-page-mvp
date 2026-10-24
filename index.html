@@ -252,6 +252,123 @@ body{background:var(--bg);font-size:14px;line-height:1.6;-webkit-font-smoothing:
 .newsletter-input-row button span{font-size:16px;margin-left:7px}
 .newsletter-privacy{font-size:9px;line-height:1.6;color:#aeb1b6;margin:10px 0 0}
 @media(max-width:620px){.footer-newsletter{grid-template-columns:1fr;gap:22px;margin:24px 0;padding:23px 19px}.footer-newsletter h2{font-size:34px}.newsletter-input-row{flex-direction:column}.newsletter-input-row button{width:100%}}
+
+/* Daily Drop editorial polish — active GitHub Pages entry point */
+:root{
+ --bg:#f7f6f2;--paper:#fffefa;--soft:#efeee8;--ink:#171719;--muted:#686a70;
+ --line:#e1ded6;--red:#b8202a;--redsoft:#f8e9e9;
+ --shadow:0 18px 48px rgba(25,20,18,.075);
+}
+html{scroll-padding-top:18px}
+body{background:var(--bg);line-height:1.6;letter-spacing:.002em}
+.wrap{width:min(1280px,calc(100% - 48px))}
+.masthead{padding-top:8px}
+.topline{padding:10px 0;color:#77777b;font-size:9px;letter-spacing:.18em}
+.brandrow{padding:25px 0 22px}
+.brand strong{font-size:clamp(42px,5vw,62px);letter-spacing:-.09em}
+.brand small{font-size:clamp(14px,1.8vw,20px);letter-spacing:.02em}
+.brand strong span,.footbrand span{color:var(--red)}
+.motto{letter-spacing:.14em}
+.iconbtn,.btn,.pill{border-radius:6px;transition:background .18s,border-color .18s,transform .18s}
+.iconbtn:hover,.btn:hover,.pill:hover{border-color:var(--red);transform:translateY(-1px)}
+.editionbar{padding:11px 0;letter-spacing:.15em}
+.demo-note{border-radius:0 5px 5px 0;padding:12px 14px;margin-top:17px;background:#f6e8e7;border-left-width:4px}
+.ticker{margin:22px 0 24px;padding:14px 0;letter-spacing:.14em}
+.ticker .live-dot{box-shadow:0 0 0 4px rgba(184,32,42,.10)}
+.hero{border-radius:7px;box-shadow:var(--shadow);border-color:var(--line)}
+.heroimg{min-height:390px}
+.herotext{padding:clamp(25px,4.2vw,54px)}
+.eyebrow{letter-spacing:.16em}
+.herotext h1{font-size:clamp(32px,4.4vw,54px);line-height:1.02;margin:16px 0}
+.herotext p{font-size:14px;line-height:1.8}
+.byline{padding-top:16px}
+.byline button{padding:7px 0 7px 12px}
+.contentgrid{gap:44px;margin-top:34px}
+.sectionline{margin:30px 0 14px;padding-top:13px;letter-spacing:.17em}
+.sectionintro h2,.pagehead h1,.article h1{letter-spacing:-.045em}
+.homepage-all-stories .storycard{grid-template-columns:220px minmax(0,1fr)}
+.storycard{padding:20px 0;gap:0}
+.storyimage{height:156px;border-radius:5px;transition:filter .2s,transform .25s}
+.storycard:hover .storyimage{filter:saturate(1.06);transform:scale(1.012)}
+.storycopy{padding-left:20px}
+.storycopy h3{font-size:clamp(19px,2vw,25px);line-height:1.16;margin:8px 0}
+.storycopy p{font-size:13px;line-height:1.7}
+.category{letter-spacing:.15em}
+.quiet,.filter{border-radius:5px;transition:background .18s,border-color .18s,color .18s}
+.quiet:hover,.filter:hover{border-color:var(--red)}
+.quiet[aria-pressed=true],.filter.active{background:var(--red);border-color:var(--red);color:#fff}
+.home-categories{margin:21px 0 27px}
+.home-categories-toggle{padding:15px 17px;border-radius:5px;font-size:11px;letter-spacing:.09em}
+.home-category-panel{padding:14px}
+.home-category-grid{gap:8px}
+.home-category{min-height:42px;border-radius:4px;transition:background .18s,border-color .18s,transform .18s}
+.home-category:hover{transform:translateY(-1px);border-color:var(--red);background:#fbf1f0}
+.pagehead{padding:22px 0 14px}
+.pagehead h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5vw,54px);line-height:1.05;margin:10px 0 12px}
+.pagehead p{max-width:690px;font-size:14px;line-height:1.8;color:var(--muted)}
+.searchbar{gap:10px;margin:20px 0}
+.searchbar input{border-radius:6px;background:var(--paper);min-height:46px}
+.searchbar .btn{background:var(--red);border-color:var(--red);color:#fff;padding-inline:20px}
+.filters{gap:8px;margin:15px 0}
+.storycard,.sidebox,.newsletter,.sourcebox,.comments,.studio,.savedempty{transition:border-color .2s,box-shadow .2s}
+.article{max-width:850px;margin:20px auto 48px}
+.article h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(35px,5.8vw,64px);line-height:1.03;margin:15px 0}
+.article .dek{font-size:18px;line-height:1.7;color:var(--muted)}
+.articleimg{border-radius:6px;box-shadow:var(--shadow)}
+.articlebody{font-size:17px;line-height:1.9}
+.articlebody p{margin:0 0 1.35em}
+.sourcebox{border-radius:5px}
+.video-grid{gap:17px}
+.video-card,.video-item{border-radius:6px;overflow:hidden}
+.sitefooter{margin-top:55px;padding-top:26px}
+.footrow{gap:36px;padding-bottom:26px}
+.footbrand{letter-spacing:-.055em}
+.footer-newsletter{border-radius:7px;box-shadow:var(--shadow)}
+.footer-newsletter h2{letter-spacing:-.05em}
+.newsletter-input-row input{border-radius:5px}
+.newsletter-input-row button{border-radius:5px;transition:filter .18s,transform .18s}
+.newsletter-input-row button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.bottomnav{box-shadow:0 -8px 30px rgba(20,20,20,.08);backdrop-filter:blur(14px)}
+.bottomnav button{transition:color .18s,background .18s}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+@media(min-width:1000px){
+ .hero{grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr)}
+ .heroimg{min-height:430px}
+ .contentgrid{grid-template-columns:minmax(0,1fr) 320px}
+}
+@media(max-width:760px){
+ .wrap{width:calc(100% - 30px)}
+ .brandrow{padding:19px 0}
+ .motto{font-size:8px;letter-spacing:.08em}
+ .hero{grid-template-columns:1fr}
+ .heroimg{min-height:0;aspect-ratio:16/10;max-height:310px}
+ .herotext{padding:21px}
+ .herotext h1{font-size:clamp(31px,8vw,43px)}
+ .contentgrid{grid-template-columns:1fr;gap:22px}
+ .homepage-all-stories .storycard,.storycard{grid-template-columns:118px minmax(0,1fr);padding:15px 0}
+ .storyimage{height:116px}
+ .storycopy{padding-left:13px}
+ .storycopy h3{font-size:17px}
+ .storycopy p{font-size:11px;line-height:1.55}
+ .articlebody{font-size:16px}
+ .footer-newsletter{margin:22px 0;padding:22px 18px}
+}
+@media(max-width:420px){
+ .wrap{width:calc(100% - 24px)}
+ .topline{font-size:8px;letter-spacing:.1em}
+ .motto{display:none}
+ .brand strong{font-size:42px}
+ .homepage-all-stories .storycard,.storycard{grid-template-columns:104px minmax(0,1fr)}
+ .storyimage{height:108px}
+ .storycopy{padding-left:11px}
+ .storycopy h3{font-size:15px}
+ .storycopy p{font-size:10px}
+ .byline{gap:7px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+
 </style>
 </head>
 <body>
