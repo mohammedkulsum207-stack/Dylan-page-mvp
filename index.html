@@ -819,6 +819,67 @@ body{background:#fbfaf8}
  .homepage-all-stories .storycard:nth-of-type(2) .storycopy h3{font-size:clamp(29px,8.5vw,37px)}
 }
 
+
+/* The Daily Drop — editorial polish pass */
+:root{
+  --editorial-radius:16px;
+  --editorial-gutter:clamp(16px,3vw,30px);
+}
+body{letter-spacing:-.008em}
+.wrap{width:min(1240px,100% - 40px)}
+.brandrow{padding-top:26px;padding-bottom:24px}
+.brand strong{letter-spacing:-.085em}
+.editionbar{border-top-width:3px;padding:11px 0}
+.demo-note{border-radius:0 8px 8px 0}
+.ticker{padding:14px 0}
+.hero{isolation:isolate;border-radius:18px;overflow:hidden;box-shadow:0 16px 44px #191a1c12}
+.heroimg{display:block;min-height:420px}
+.herotext{padding:clamp(26px,4vw,56px)}
+.herotext h1{max-width:12ch;margin:16px 0 18px}
+.herotext p{max-width:44ch}
+.byline{margin-top:5px}
+.sectionline{margin-top:32px;padding-top:13px}
+.contentgrid{gap:clamp(24px,4vw,44px)}
+.storycard{gap:0;padding:19px 0}
+.storyimage{border-radius:9px;transition:transform .25s ease,filter .25s ease}
+.storycard:hover .storyimage{filter:saturate(1.06)}
+.storycopy h3{transition:color .18s ease}
+.storycopy h3:hover{color:var(--red)}
+.storycopy p{max-width:58ch}
+.cardactions{gap:8px}
+.quiet,.btn,.iconbtn,.filter{transition:background .18s ease,border-color .18s ease,transform .18s ease}
+.quiet:hover,.btn:hover,.iconbtn:hover{border-color:var(--red)}
+.sidebox{padding-top:13px}
+.trendrow{transition:padding .18s ease}
+.trendrow:hover{padding-left:5px}
+.newsletter{border-radius:12px;padding:22px}
+.newsletter .primary{margin-top:5px}
+.homepage-all-stories .storycard{grid-template-columns:minmax(150px, .38fr) minmax(0,1fr)}
+.homepage-all-stories .storyimage{height:155px}
+.sitefooter{margin-top:60px}
+@media(max-width:850px){
+  .heroimg{min-height:340px}
+  .herotext{padding:clamp(22px,3vw,36px)}
+  .contentgrid{gap:20px}
+}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 28px)}
+  .brandrow{padding:18px 0}
+  .hero{border-radius:13px;margin-bottom:26px}
+  .heroimg{min-height:0;aspect-ratio:16/10}
+  .herotext{padding:22px 18px}
+  .herotext h1{font-size:clamp(33px,9vw,41px);max-width:14ch}
+  .herotext p{font-size:13px}
+  .sectionline{margin-top:25px}
+  .storycard{padding:14px 0}
+  .storyimage{border-radius:7px}
+  .homepage-all-stories .storycard{grid-template-columns:108px minmax(0,1fr)}
+  .homepage-all-stories .storyimage{height:112px}
+  .newsletter{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .storyimage,.storycopy h3,.quiet,.btn,.iconbtn,.filter,.trendrow{transition:none}
+}
 </style>
 </head>
 <body>
