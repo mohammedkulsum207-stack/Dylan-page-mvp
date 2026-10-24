@@ -369,6 +369,51 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
 
+
+/* VISIBLE V2 redesign: stronger editorial hierarchy and card-based front page */
+.masthead{border-top:6px solid var(--red)!important}
+.topline{padding-top:13px!important}
+.brandrow{padding:28px 0 25px!important}
+.brand strong{font-size:clamp(48px,6.2vw,76px)!important;letter-spacing:-.095em!important}
+.brand small{font-size:clamp(16px,2vw,23px)!important;letter-spacing:.015em!important}
+.editionbar{border-top:1px solid var(--ink)!important;border-bottom:1px solid var(--ink)!important}
+.demo-note{background:#f5e2e1!important;border-left:5px solid var(--red)!important;color:#4c2528!important}
+.ticker{background:var(--ink)!important;color:#fff!important;border:0!important;padding:15px 17px!important;border-radius:5px!important}
+.ticker span:last-child{color:#e5e2dd!important}
+.hero{grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr)!important;border:1px solid #d7d1c7!important;border-radius:9px!important;overflow:hidden!important;box-shadow:0 18px 45px rgba(25,20,18,.12)!important}
+.heroimg{min-height:430px!important;max-height:560px!important;object-fit:cover!important}
+.herotext{padding:clamp(28px,4vw,52px)!important;background:linear-gradient(145deg,#fffefa 0%,#f3f0e9 100%)!important}
+.herotext h1{font-size:clamp(34px,4.5vw,57px)!important;line-height:1.01!important}
+.herotext .eyebrow{display:inline-block;background:#f5e2e1!important;padding:7px 9px!important;border-radius:3px!important}
+.homepage-all-stories{display:block!important}
+.homepage-all-stories .sectionintro{margin:0 0 20px!important;padding:4px 0 14px!important;border-bottom:1px solid var(--line)!important}
+.homepage-all-stories .storycard{grid-template-columns:220px minmax(0,1fr)!important;gap:0!important;margin:0 0 14px!important;padding:13px!important;border:1px solid var(--line)!important;border-radius:7px!important;background:var(--paper)!important;box-shadow:0 4px 18px rgba(25,20,18,.035)!important;overflow:hidden!important}
+.homepage-all-stories .storyimage{height:160px!important;border-radius:4px!important;object-fit:cover!important}
+.homepage-all-stories .storycopy{padding:6px 8px 6px 20px!important}
+.homepage-all-stories .storycopy h3{font-size:clamp(20px,2.2vw,26px)!important;line-height:1.15!important}
+.homepage-all-stories .storycopy p{font-size:13px!important;line-height:1.7!important}
+.home-category{background:var(--paper)!important;border:1px solid var(--line)!important;border-radius:4px!important;min-height:44px!important}
+.home-category:hover{background:var(--redsoft)!important}
+.sectionline{border-top:2px solid var(--red)!important}
+.footer-newsletter{border-top:5px solid var(--red)!important}
+.bottomnav button.active{background:var(--redsoft)!important;color:var(--red)!important}
+@media(max-width:760px){
+ .hero{grid-template-columns:1fr!important}
+ .heroimg{min-height:0!important;max-height:none!important;aspect-ratio:16/9!important}
+ .herotext{padding:23px!important}
+ .herotext h1{font-size:clamp(32px,8.4vw,45px)!important}
+ .homepage-all-stories .storycard{grid-template-columns:112px minmax(0,1fr)!important;padding:9px!important;margin-bottom:10px!important}
+ .homepage-all-stories .storyimage{height:118px!important}
+ .homepage-all-stories .storycopy{padding:4px 5px 4px 12px!important}
+ .homepage-all-stories .storycopy h3{font-size:16px!important}
+ .homepage-all-stories .storycopy p{font-size:11px!important}
+}
+@media(max-width:390px){
+ .homepage-all-stories .storycard{grid-template-columns:96px minmax(0,1fr)!important}
+ .homepage-all-stories .storyimage{height:106px!important}
+ .homepage-all-stories .storycopy h3{font-size:14px!important}
+}
+
 </style>
 </head>
 <body>
