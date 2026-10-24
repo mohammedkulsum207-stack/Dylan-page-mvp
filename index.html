@@ -731,6 +731,94 @@ a,button{transition:color .18s ease,background-color .18s ease,border-color .18s
  .sitefooter.wrap{padding:34px 14px 100px}
 }
 
+
+/* THE DAILY DROP — MAGAZINE FRONT PAGE V5 */
+:root{--red:#b51f2b;--reading-serif:'Playfair Display',Georgia,'Times New Roman',serif}
+body{background:#fbfaf8}
+.masthead{border-top:5px solid var(--red)}
+.masthead .brandrow{padding-top:30px;padding-bottom:28px}
+.masthead .brand strong{font-size:clamp(54px,7.2vw,92px);letter-spacing:-.085em}
+.masthead .brand small{font-size:clamp(12px,1.4vw,16px);letter-spacing:.035em}
+.masthead .topline{font-size:9px}
+.masthead .editionbar{border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.ticker{display:flex;align-items:center;gap:10px;background:var(--red);color:white;border:0;border-radius:0;padding:14px 18px;font-size:10px;letter-spacing:.12em;font-weight:800}
+.ticker span{color:#ffe7e9;font-weight:500;letter-spacing:.01em}
+.live-dot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px #ffffff30}
+.home-categories{margin:18px 0 22px;border-bottom:1px solid var(--line)}
+.home-categories-toggle{display:flex;align-items:center;justify-content:space-between;list-style:none;font-size:10px;letter-spacing:.13em;font-weight:800;padding:14px 0}
+.home-categories-toggle::-webkit-details-marker{display:none}
+.home-categories-toggle::after{content:'＋';font-size:18px;color:var(--red)}
+.home-categories[open] .home-categories-toggle::after{content:'−'}
+.home-category-panel{padding:0 0 16px}
+.home-category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.home-category{border:1px solid var(--line);background:#fff;display:flex;align-items:center;gap:8px;justify-content:flex-start;padding:11px 12px;min-height:44px;text-align:left}
+.home-category .cat-symbol{color:var(--red);font-size:16px}
+.home-category b{font-size:11px;font-weight:700}
+.hero{border-radius:0;box-shadow:none;min-height:590px;margin-top:22px;background:#171717}
+.hero::after{content:'THE LEAD STORY';position:absolute;z-index:3;top:22px;left:24px;padding:7px 10px;background:var(--red);color:#fff;font-size:9px;font-weight:800;letter-spacing:.14em}
+.herotext{min-height:590px;width:min(760px,75%);padding:clamp(34px,6vw,88px)}
+.herotext .eyebrow{font-size:10px;letter-spacing:.16em}
+.herotext h1{font-size:clamp(48px,6.5vw,88px);line-height:.99;max-width:760px;margin:19px 0 23px}
+.herotext p{font-size:16px;line-height:1.8;max-width:550px}
+.herotext .byline{border-top-color:#ffffff38;padding-top:17px}
+.storylist.homepage-all-stories{margin-top:62px}
+.homepage-all-stories>.sectionline{display:flex;justify-content:space-between;align-items:center;border-top:2px solid #191919;padding:12px 0 0;margin:0 0 14px;font-size:10px;letter-spacing:.17em;font-weight:800}
+.homepage-all-stories .sectionintro{margin-bottom:24px}
+.homepage-all-stories .sectionintro h2{font-size:clamp(36px,4.8vw,58px);line-height:1.04;letter-spacing:-.05em}
+.homepage-all-stories .sectionintro p{font-size:14px;max-width:560px}
+.homepage-all-stories .storycard{position:relative;border:0;border-bottom:1px solid #dcd7d0;padding:0 0 26px;margin:0;background:transparent;box-shadow:none;min-width:0}
+.homepage-all-stories .storyimage{width:100%;height:clamp(210px,25vw,330px);object-fit:cover;display:block;background:#e9e5df}
+.homepage-all-stories .storycopy{padding:18px 2px 0}
+.homepage-all-stories .storycopy .category{font-size:10px;letter-spacing:.14em;line-height:1.5}
+.homepage-all-stories .storycopy h3{font-size:clamp(25px,2.75vw,37px);line-height:1.1;letter-spacing:-.04em;margin:10px 0 12px}
+.homepage-all-stories .storycopy p{font-size:14px;line-height:1.8;color:#5c5b59}
+.homepage-all-stories .storycopy .meta{font-size:11px;margin:3px 0 12px}
+.homepage-all-stories .cardactions{padding-top:12px;border-top:1px solid #e8e3dd}
+.homepage-all-stories .storycard:nth-of-type(2){grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:clamp(20px,3vw,42px);padding-bottom:34px}
+.homepage-all-stories .storycard:nth-of-type(2) .storyimage{height:100%;min-height:340px}
+.homepage-all-stories .storycard:nth-of-type(2) .storycopy{padding:26px 12px 26px 0}
+.homepage-all-stories .storycard:nth-of-type(2) .storycopy h3{font-size:clamp(34px,4vw,54px);line-height:1.03}
+.homepage-all-stories .storycard:hover .storyimage{filter:saturate(1.04)}
+.homepage-all-stories .storycard:hover .storycopy h3{color:var(--red)}
+.homepage-all-stories .storycopy h3,.trendrow b{font-family:var(--reading-serif)}
+.trendrow{grid-template-columns:44px 1fr;gap:12px;padding:18px 0}
+.trendrow b{font-size:18px;line-height:1.25}
+.rank{font-size:36px}
+.newsletter{border-radius:0}
+.sitefooter.wrap{border-top:5px solid var(--red)}
+.article{box-shadow:none}
+@media(max-width:900px){
+ .home-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hero,.herotext{min-height:520px}
+ .herotext{width:84%}
+ .homepage-all-stories .storycard:nth-of-type(2) .storyimage{min-height:280px}
+}
+@media(max-width:680px){
+ .masthead{border-top-width:4px}
+ .masthead .brandrow{padding:23px 0 20px}
+ .masthead .brand strong{font-size:clamp(48px,14vw,66px)}
+ .masthead .brand small{font-size:12px}
+ .ticker{align-items:flex-start;flex-wrap:wrap;gap:7px;padding:12px}
+ .ticker span{flex-basis:100%;padding-left:17px}
+ .home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .home-category{padding:10px;min-height:42px}
+ .hero,.herotext{min-height:520px}
+ .hero::after{top:14px;left:14px;font-size:8px}
+ .herotext{width:100%;padding:24px 20px 28px}
+ .herotext h1{font-size:clamp(39px,11vw,55px);line-height:1.02}
+ .herotext p{font-size:14px;line-height:1.7}
+ .storylist.homepage-all-stories{margin-top:40px}
+ .homepage-all-stories .sectionintro h2{font-size:38px}
+ .homepage-all-stories .storycard{display:block!important;padding-bottom:23px}
+ .homepage-all-stories .storyimage{height:clamp(220px,64vw,330px);min-height:0}
+ .homepage-all-stories .storycopy{padding:15px 0 0}
+ .homepage-all-stories .storycopy h3{font-size:clamp(26px,7.8vw,34px);line-height:1.1}
+ .homepage-all-stories .storycopy p{font-size:14px;line-height:1.75}
+ .homepage-all-stories .storycard:nth-of-type(2) .storyimage{height:clamp(220px,64vw,330px);min-height:0}
+ .homepage-all-stories .storycard:nth-of-type(2) .storycopy{padding:15px 0 0}
+ .homepage-all-stories .storycard:nth-of-type(2) .storycopy h3{font-size:clamp(29px,8.5vw,37px)}
+}
+
 </style>
 </head>
 <body>
