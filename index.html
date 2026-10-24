@@ -618,6 +618,119 @@ body{background:var(--bg);font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 
+
+/* THE DAILY DROP — EDITORIAL TYPE & READING RHYTHM V4 */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap');
+:root{
+ --reading-serif:'Playfair Display',Georgia,'Times New Roman',serif;
+ --reading-sans:'DM Sans',Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+ --ink:#171717;--muted:#686868;--line:#e6e2dc;--red:#bd1f2d;
+}
+body{font-family:var(--reading-sans);font-size:16px;line-height:1.72;letter-spacing:-.012em;-webkit-font-smoothing:antialiased}
+.wrap{width:min(1320px,100% - 64px)}
+.masthead .topline{font-size:10px;letter-spacing:.19em;padding:14px 0}
+.masthead .brandrow{padding:28px 0 24px;align-items:flex-end}
+.masthead .brand{letter-spacing:-.09em}
+.masthead .brand strong{font-family:var(--reading-serif);font-weight:800;font-size:clamp(48px,6.5vw,82px);line-height:.84;letter-spacing:-.075em}
+.masthead .brand small{font-family:var(--reading-sans);font-size:clamp(12px,1.4vw,17px);font-weight:800;letter-spacing:.015em;line-height:1.35;margin-top:8px}
+.masthead .motto{font-size:11px;letter-spacing:.14em;line-height:1.6;max-width:190px;text-align:right}
+.masthead .editionbar{font-size:10px;letter-spacing:.13em;padding:12px 0}
+#app{padding-top:24px}
+.ticker{padding:13px 18px;font-size:11px;letter-spacing:.07em}
+.hero{min-height:570px;margin-top:18px;overflow:hidden}
+.heroimg{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.hero:hover .heroimg{transform:scale(1.025)}
+.herotext{min-height:570px;width:min(740px,72%);padding:clamp(34px,6vw,86px)}
+.herotext .eyebrow,.eyebrow{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.herotext h1{font-family:var(--reading-serif);font-size:clamp(44px,6.1vw,82px);line-height:1.015;letter-spacing:-.045em;font-weight:700;margin:20px 0 22px;text-wrap:balance}
+.herotext p{font-family:var(--reading-sans);font-size:16px;line-height:1.75;max-width:540px}
+.herotext .byline{font-size:11px;letter-spacing:.045em;margin-top:24px}
+.contentgrid{grid-template-columns:minmax(0,1fr) 300px;gap:54px;margin-top:54px}
+.sectionline{margin-top:46px;padding-top:12px;font-size:10px;letter-spacing:.17em;text-transform:uppercase}
+.sectionintro h2,.sidebox h2{font-family:var(--reading-serif);font-size:clamp(32px,3.6vw,48px);line-height:1.08;letter-spacing:-.04em;font-weight:700}
+.sectionintro p,.pagehead p{font-size:15px;line-height:1.75;color:var(--muted);max-width:650px}
+.homepage-all-stories{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;row-gap:30px;margin-top:26px}
+.homepage-all-stories .storycard{border:0;border-bottom:1px solid var(--line);background:transparent;box-shadow:none;padding:0 0 24px;overflow:hidden}
+.homepage-all-stories .storycard:hover{transform:translateY(-2px);box-shadow:none}
+.homepage-all-stories .storyimage{height:clamp(190px,23vw,300px);width:100%;object-fit:cover}
+.homepage-all-stories .storycopy{padding:18px 2px 0}
+.homepage-all-stories .storycopy .category{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--red)}
+.homepage-all-stories .storycopy .meta{font-size:11px;letter-spacing:.035em;color:#777}
+.homepage-all-stories .storycopy h3{font-family:var(--reading-serif);font-size:clamp(24px,2.65vw,35px);font-weight:700;line-height:1.12;letter-spacing:-.035em;margin:10px 0 12px;text-wrap:balance}
+.homepage-all-stories .storycopy h3 a{text-decoration:none;text-decoration-thickness:1px;text-underline-offset:4px}
+.homepage-all-stories .storycard:hover .storycopy h3 a{text-decoration:underline;text-decoration-color:#bd1f2d}
+.homepage-all-stories .storycopy p{font-size:14px;line-height:1.8;color:#626262;margin:0}
+.homepage-all-stories .cardactions{margin-top:17px;padding-top:12px;border-top:1px solid #eee9e2}
+.homepage-all-stories .cardactions button{font-size:11px}
+.homepage-all-stories .storycard:nth-of-type(2){grid-column:1/-1;display:grid;grid-template-columns:1.12fr 1fr;gap:26px;align-items:center;padding-bottom:30px}
+.homepage-all-stories .storycard:nth-of-type(2) .storyimage{height:100%;min-height:300px}
+.homepage-all-stories .storycard:nth-of-type(2) .storycopy{padding:24px 22px 24px 0}
+.homepage-all-stories .storycard:nth-of-type(2) .storycopy h3{font-size:clamp(30px,3.8vw,48px);line-height:1.04}
+.sidebar{border-left:1px solid var(--line);padding-left:28px}
+.sidebox{border-top:3px solid var(--ink);padding-top:16px;margin-bottom:32px}
+.sidebox h2{font-size:29px}
+.trendrow{grid-template-columns:42px 1fr;padding:18px 0;border-bottom:1px solid var(--line)}
+.rank{font-family:var(--reading-serif);font-size:35px;font-weight:700;color:var(--red);line-height:1}
+.trendrow b{font-family:var(--reading-serif);font-size:17px;line-height:1.3}
+.newsletter{padding:30px}
+.newsletter h3{font-family:var(--reading-serif);font-size:34px;line-height:1.05;letter-spacing:-.035em}
+.newsletter p{font-size:14px;line-height:1.7}
+.home-categories-toggle{font-size:13px;font-weight:700}
+.home-category{font-size:12px;font-weight:700;letter-spacing:.01em}
+.pagehead h1{font-family:var(--reading-serif);font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-.045em}
+.pagehead .eyebrow{letter-spacing:.18em}
+.article{max-width:900px;margin:0 auto;padding:clamp(24px,6vw,72px)!important}
+.article h1{font-family:var(--reading-serif);font-size:clamp(38px,6.5vw,76px);line-height:1.04;letter-spacing:-.045em;text-wrap:balance}
+.article .dek{font-size:clamp(17px,2vw,21px);line-height:1.75;color:#555;max-width:720px}
+.article .byline{font-size:12px;letter-spacing:.04em}
+.article .articleimg{width:100%;max-height:600px;object-fit:cover}
+.article p{font-size:18px;line-height:1.95;letter-spacing:0;max-width:720px}
+.article h2,.article h3{font-family:var(--reading-serif);line-height:1.2;letter-spacing:-.025em}
+.sitefooter .footbrand{font-family:var(--reading-serif);font-size:34px}
+.sitefooter .footer-newsletter h2{font-family:var(--reading-serif);line-height:1.04}
+button,input,textarea,select{font-family:var(--reading-sans)}
+a,button{transition:color .18s ease,background-color .18s ease,border-color .18s ease}
+::selection{background:#bd1f2d;color:#fff}
+@media(max-width:900px){
+ .wrap{width:calc(100% - 40px)}
+ .contentgrid{grid-template-columns:minmax(0,1fr) 260px;gap:30px}
+ .hero,.herotext{min-height:500px}
+ .herotext h1{font-size:clamp(42px,6.5vw,66px)}
+ .homepage-all-stories .storycard:nth-of-type(2) .storyimage{min-height:250px}
+}
+@media(max-width:680px){
+ .wrap{width:calc(100% - 28px)}
+ .masthead.wrap{padding:0 14px}
+ .masthead .brandrow{padding:23px 0 20px}
+ .masthead .brand strong{font-size:clamp(48px,14vw,66px)}
+ .masthead .brand small{font-size:12px;letter-spacing:0}
+ .masthead .topline{font-size:8px;letter-spacing:.08em}
+ #app{padding-top:14px}
+ .ticker{font-size:9px;padding:11px 12px}
+ .hero,.herotext{min-height:500px}
+ .herotext{padding:24px 20px 28px}
+ .herotext h1{font-size:clamp(38px,11vw,54px);line-height:1.03;margin:14px 0}
+ .herotext p{font-size:14px;line-height:1.65}
+ .contentgrid{gap:28px;margin-top:32px}
+ .sectionline{margin-top:32px}
+ .sectionintro h2,.sidebox h2{font-size:34px}
+ .sectionintro p,.pagehead p{font-size:14px}
+ .homepage-all-stories{grid-template-columns:1fr;gap:24px;margin-top:20px}
+ .homepage-all-stories .storycard{display:block!important;padding-bottom:21px}
+ .homepage-all-stories .storyimage{height:clamp(210px,62vw,310px);min-height:0;width:100%}
+ .homepage-all-stories .storycopy{padding:15px 0 0}
+ .homepage-all-stories .storycopy h3{font-size:clamp(25px,7.5vw,32px);line-height:1.12;margin:8px 0 10px}
+ .homepage-all-stories .storycopy p{font-size:14px;line-height:1.75}
+ .homepage-all-stories .storycard:nth-of-type(2) .storyimage{height:clamp(220px,64vw,330px);min-height:0}
+ .homepage-all-stories .storycard:nth-of-type(2) .storycopy{padding:15px 0 0}
+ .homepage-all-stories .storycard:nth-of-type(2) .storycopy h3{font-size:clamp(28px,8vw,36px)}
+ .sidebar{padding:24px 0 0}
+ .article{padding:24px 18px!important}
+ .article h1{font-size:clamp(36px,10vw,52px)}
+ .article p{font-size:17px;line-height:1.85}
+ .sitefooter.wrap{padding:34px 14px 100px}
+}
+
 </style>
 </head>
 <body>
