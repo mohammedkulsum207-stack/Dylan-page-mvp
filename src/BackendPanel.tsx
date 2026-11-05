@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const URL = 'https://jqgkmtbflkdvyyoehhzx.supabase.co';
+const SUPABASE_URL = 'https://jqgkmtbflkdvyyoehhzx.supabase.co';
 const KEY = 'sb_publishable_5BZkLUow6QQg5fR9ZbOVZQ_qfB4rbgK';
 type User = { id: string; email?: string };
 type Session = { access_token: string; refresh_token: string; user: User };
@@ -19,7 +19,7 @@ export default function BackendPanel() {
  const [headline,setHeadline] = useState(''); const [summary,setSummary] = useState(''); const [source,setSource] = useState(''); const [sourceUrl,setSourceUrl] = useState('');
 
  async function request(path:string, method='GET', body?:unknown, token?:string) {
-  const response = await fetch(URL+path,{method,headers:{apikey:KEY,...(token?{Authorization:`Bearer ${token}`}:{}),'Content-Type':'application/json',...(method==='POST'?{Prefer:'return=representation'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});
+  const response = await fetch(SUPABASE_URL+path,{method,headers:{apikey:KEY,...(token?{Authorization:`Bearer ${token}`}:{}),'Content-Type':'application/json',...(method==='POST'?{Prefer:'return=representation'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});
   const raw = await response.text(); let result; try { result=raw?JSON.parse(raw):null; } catch { throw new Error('Unexpected response from the database.'); }
   if(!response.ok) throw new Error(result?.msg||result?.message||result?.error_description||result?.details||'Request failed. Please try again.');
   return result;
