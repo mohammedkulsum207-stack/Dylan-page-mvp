@@ -54,15 +54,19 @@ export default function BackendPanel() {
   } catch(e){setMessage(e instanceof Error?e.message:'Authentication failed.');} finally{setBusy(false);}
  }
  async function refreshSession() {
-  if(!session?.refresh_token) return session;
-  const next=await request('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:session.refresh_token});
+  const raw=localStorage.getItem('daily-drop-session');
+  const current=(raw?JSON.parse(raw):session) as Session|null;
+  if(!current?.refresh_token) return session;
+  const next=await request('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:current.refresh_token});
   const s:Session={access_token:next.access_token,refresh_token:next.refresh_token,user:next.user};
   setSession(s);localStorage.setItem('daily-drop-session',JSON.stringify(s));return s;
  }
  async function withSession(action:(s:Session)=>Promise<void>) {
-  if(!session){setMessage('Sign in to use reader features.');return;}
+  const raw=localStorage.getItem('daily-drop-session');
+  const current=(raw?JSON.parse(raw):session) as Session|null;
+  if(!current){setMessage('Sign in to use reader features.');return;}
   setBusy(true);setMessage('');
-  try{let s=session;try{await action(s);}catch(first){if(!s.refresh_token)throw first;s=await refreshSession()||s;await action(s);} }
+  try{let s=current;try{await action(s);}catch(first){if(!s.refresh_token)throw first;s=await refreshSession()||s;await action(s);} }
   catch(e){setMessage(e instanceof Error?e.message:'The action could not be completed.');}
   finally{setBusy(false);}
  }

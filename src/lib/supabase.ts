@@ -3,7 +3,14 @@ const SUPABASE_KEY = 'sb_publishable_5BZkLUow6QQg5fR9ZbOVZQ_qfB4rbgK';
 const SESSION_KEY = 'daily-drop-session';
 export type UserSession = { access_token:string; refresh_token:string; expires_at?:number; expires_in?:number; token_type?:string; user:{id:string;email?:string} };
 export function readSession():UserSession|null {
-  try { const value=JSON.parse(localStorage.getItem(SESSION_KEY)||'null'); return value?.access_token&&value?.refresh_token&&value?.user?.id?value:null; } catch { return null; }
+  try {
+    const value=JSON.parse(localStorage.getItem(SESSION_KEY)||'null');
+    if(!value?.access_token||!value?.refresh_token||!value?.user?.id)return null;
+    if(!value.expires_at){
+      try{const payload=JSON.parse(atob(value.access_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));value.expires_at=payload.exp;}catch{}
+    }
+    return value;
+  } catch { return null; }
 }
 export function writeSession(session:UserSession|null) {
   if(session) localStorage.setItem(SESSION_KEY,JSON.stringify(session)); else localStorage.removeItem(SESSION_KEY);

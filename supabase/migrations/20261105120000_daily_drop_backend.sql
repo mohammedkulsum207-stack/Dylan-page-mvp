@@ -148,21 +148,3 @@ grant select on public.news_engagement to anon, authenticated;
 grant select, insert, delete on public.news_article_likes to authenticated;
 grant select on public.news_comments to anon, authenticated;
 grant insert, delete on public.news_comments to authenticated;
-
-
--- Reader bookmarks for live RSS articles. Each reader can manage only their own links.
-create table if not exists public.news_bookmarks (
-  user_id uuid not null references auth.users(id) on delete cascade,
-  article_url text not null check (article_url ~ '^https?://'),
-  title text not null check (char_length(title) between 1 and 500),
-  source text not null default '',
-  summary text not null default '',
-  created_at timestamptz not null default now(),
-  primary key (user_id, article_url)
-);
-alter table public.news_bookmarks enable row level security;
-create policy news_bookmarks_owner on public.news_bookmarks
-  for all to authenticated
-  using ((select auth.uid()) = user_id)
-  with check ((select auth.uid()) = user_id);
-grant select, insert, delete on public.news_bookmarks to authenticated;
