@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const URL = 'https://jqgkmtbflkdvyyoehhzx.supabase.co';
+const SUPABASE_URL = 'https://jqgkmtbflkdvyyoehhzx.supabase.co';
 const KEY = 'sb_publishable_5BZkLUow6QQg5fR9ZbOVZQ_qfB4rbgK';
 type User = { id: string; email?: string };
 type Session = { access_token: string; refresh_token: string; user: User };
@@ -19,7 +19,7 @@ export default function BackendPanel() {
  const [headline,setHeadline] = useState(''); const [summary,setSummary] = useState(''); const [source,setSource] = useState(''); const [sourceUrl,setSourceUrl] = useState('');
 
  async function request(path:string, method='GET', body?:unknown, token?:string) {
-  const response = await fetch(URL+path,{method,headers:{apikey:KEY,...(token?{Authorization:`Bearer ${token}`}:{}),'Content-Type':'application/json',...(method==='POST'?{Prefer:'return=representation'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});
+  const response = await fetch(SUPABASE_URL+path,{method,headers:{apikey:KEY,...(token?{Authorization:`Bearer ${token}`}:{}),'Content-Type':'application/json',...(method==='POST'?{Prefer:'return=representation'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});
   const raw = await response.text(); let result; try { result=raw?JSON.parse(raw):null; } catch { throw new Error('Unexpected response from the database.'); }
   if(!response.ok) throw new Error(result?.msg||result?.message||result?.error_description||result?.details||'Request failed. Please try again.');
   return result;
@@ -54,15 +54,19 @@ export default function BackendPanel() {
   } catch(e){setMessage(e instanceof Error?e.message:'Authentication failed.');} finally{setBusy(false);}
  }
  async function refreshSession() {
-  if(!session?.refresh_token) return session;
-  const next=await request('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:session.refresh_token});
+  const raw=localStorage.getItem('daily-drop-session');
+  const current=(raw?JSON.parse(raw):session) as Session|null;
+  if(!current?.refresh_token) return session;
+  const next=await request('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:current.refresh_token});
   const s:Session={access_token:next.access_token,refresh_token:next.refresh_token,user:next.user};
   setSession(s);localStorage.setItem('daily-drop-session',JSON.stringify(s));return s;
  }
  async function withSession(action:(s:Session)=>Promise<void>) {
-  if(!session){setMessage('Sign in to use reader features.');return;}
+  const raw=localStorage.getItem('daily-drop-session');
+  const current=(raw?JSON.parse(raw):session) as Session|null;
+  if(!current){setMessage('Sign in to use reader features.');return;}
   setBusy(true);setMessage('');
-  try{let s=session;try{await action(s);}catch(first){if(!s.refresh_token)throw first;s=await refreshSession()||s;await action(s);} }
+  try{let s=current;try{await action(s);}catch(first){if(!s.refresh_token)throw first;s=await refreshSession()||s;await action(s);} }
   catch(e){setMessage(e instanceof Error?e.message:'The action could not be completed.');}
   finally{setBusy(false);}
  }
