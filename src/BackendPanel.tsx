@@ -16,6 +16,7 @@ export default function BackendPanel() {
  const [comments,setComments] = useState<Record<string,Comment[]>>({});
  const [drafts,setDrafts] = useState<Record<string,string>>({});
  const [editor,setEditor] = useState(false);
+ const [headline,setHeadline] = useState(''); const [summary,setSummary] = useState(''); const [source,setSource] = useState(''); const [sourceUrl,setSourceUrl] = useState('');
 
  async function request(path:string, method='GET', body?:unknown, token?:string) {
   const response = await fetch(URL+path,{method,headers:{apikey:KEY,...(token?{Authorization:`Bearer ${token}`}:{}),'Content-Type':'application/json',...(method==='POST'?{Prefer:'return=representation'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});
@@ -82,6 +83,16 @@ export default function BackendPanel() {
    setDrafts(v=>({...v,[storyId]:''}));setMessage('Comment submitted. It will appear publicly after editorial approval.');
   });
  }
+ async function publishStory() {
+  if(!session)return;
+  setBusy(true);setMessage('');
+  try {
+   const parsed=new URL(sourceUrl);if(!['https:','http:'].includes(parsed.protocol))throw new Error('Use a valid HTTP or HTTPS source URL.');
+   if(!headline.trim()||!summary.trim()||!source.trim())throw new Error('Complete the headline, story and source fields.');
+   await request('/rest/v1/stories','POST',{headline:headline.trim(),summary:summary.trim(),body:[summary.trim()],category:'World',author_id:session.user.id,sources:[{name:source.trim(),url:parsed.href}],status:'published',published_at:new Date().toISOString()},session.access_token);
+   await loadStories(session.access_token);setHeadline('');setSummary('');setSource('');setSourceUrl('');setMessage('Story published to the shared Daily Drop database.');
+  }catch(e){setMessage(e instanceof Error?e.message:'Publishing failed.');}finally{setBusy(false);}
+ }
  async function signOut() {
   if(session)try{await request('/auth/v1/logout','POST',undefined,session.access_token);}catch{}
   localStorage.removeItem('daily-drop-session');setSession(null);setEditor(false);setSaved([]);setLiked([]);setComments({});setMessage('Signed out.');
@@ -96,6 +107,7 @@ export default function BackendPanel() {
    <button className="tab" disabled={busy||!email||password.length<8} type="button" onClick={()=>authenticate(true)}>Create account</button>
   </form>:<div className="panel"><p>Signed in as <strong>{session.user.email||'reader'}</strong></p><p className="meta">Saved stories: {saved.length} · Liked stories: {liked.length}</p><button className="tab" disabled={busy} onClick={signOut}>Sign out</button>{editor&&<p className="meta">Editorial access is enabled for this account.</p>}</div>}
   <p role="status" aria-live="polite">{message}</p>
+  {editor&&<section className="panel"><h2>Newsroom · Publish a sourced story</h2><form onSubmit={e=>{e.preventDefault();publishStory();}}><label>Headline<input required maxLength={180} value={headline} onChange={e=>setHeadline(e.target.value)}/></label><label>Story summary<textarea required value={summary} onChange={e=>setSummary(e.target.value)}/></label><label>Source name<input required value={source} onChange={e=>setSource(e.target.value)}/></label><label>Source URL<input required type="url" value={sourceUrl} onChange={e=>setSourceUrl(e.target.value)}/></label><button className="primary" disabled={busy}>Publish story</button></form></section>}
   <h2>Published stories · Shared database</h2>
   <button className="tab" disabled={busy} onClick={()=>loadStories(session?.access_token).catch(e=>setMessage(e.message))}>Refresh stories</button>
   {!posts.length&&<p>No published database stories are available yet. The demo homepage remains separate.</p>}
